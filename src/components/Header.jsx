@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 const Header = () => {
   return (
-    <header className="flex bg-slate-300 h-[100px] font-bold">
+    <header className="flex  h-[100px] font-bold">
       <div className="flex m-auto  w-[1286px] h-[41px]">
         <Link
           to={"/"}
@@ -33,10 +33,21 @@ const Header = () => {
           </Link>
         </nav>
         <div className="flex items-center text-base justify-around  w-56 mr-8">
-          <Link to={"/profile"}><ProfileOutlined className="text-2xl cursor-pointer"  /></Link>
-       <Link to={"/search"}>   <SearchOutlined className="text-2xl cursor-pointer" /></Link>
-        <Link to={"/favorite"}>  <HeartOutlined className="text-2xl cursor-pointer"  /></Link>
-         <Link to={"/cart"}> <ShoppingCartOutlined className="text-2xl cursor-pointer" /></Link>
+          <Link to={"/profile"}>
+            <ProfileOutlined className="text-2xl cursor-pointer" />
+          </Link>
+          <Link to={"/search"}>
+            {" "}
+            <SearchOutlined className="text-2xl cursor-pointer" />
+          </Link>
+          <Link to={"/favorite"}>
+            {" "}
+            <HeartOutlined className="text-2xl cursor-pointer" />
+          </Link>
+          <Link to={"/cart"}>
+            {" "}
+            <ShoppingCartOutlined className="text-2xl cursor-pointer" />
+          </Link>
         </div>
       </div>
     </header>

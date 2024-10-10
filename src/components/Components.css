@@ -1,7 +1,12 @@
-.borderTalha{
-    border: 2px solid black;
+.borderTalha {
+  border: 2px solid black;
 }
-.iconsStyle{
-font-size: 22px;
-cursor: pointer;
+.iconsStyle {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.heading {
+  font-size: 36px;
+  font-weight: 700;
 }

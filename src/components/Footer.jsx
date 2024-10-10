@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="text-gray-600 body-font borderTalha">
+    <footer className=" body-font borderTalha">
       <div className="max-w-[1440px]  m-auto min-h-[425px] borderTalha">
         <div className="container  px-5 py-12 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
           <div className="w-64 flex-shrink-0 md:mx-0  text-start md:text-left">
@@ -62,36 +62,38 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link className="text-gray-600 hover:text-gray-800">
-                  Privacy Policy
+                    Privacy Policy
                   </Link>
                 </li>
-                
               </nav>
             </div>
             <div className="lg:w-2/4 md:w-1/2 w-full  px-4 ">
               <h2 className="title-font font-normal text-gray-900 tracking-widest text-sm mb-3">
-Newsletter..
+                Newsletter..
               </h2>
-            <div className="flex gap-4">  <Input placeholder="Enter Your Email" prefix={<UserOutlined />} />  <span className="font-bold underline my-1 cursor-pointer"  >SUBSCRIBE</span></div>
+              <div className="flex gap-4">
+                {" "}
+                <Input
+                  placeholder="Enter Your Email"
+                  prefix={<UserOutlined />}
+                />{" "}
+                <span className="font-bold underline my-1 cursor-pointer">
+                  SUBSCRIBE
+                </span>
+              </div>
             </div>
           </div>
         </div>
-            <hr  />
-        
-          <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-            <p className=" text-sm text-center sm:text-left">
-               
-              <Link
-                to={'/'}
-                
-                className=" ml-1 font-extrabold"
-                
-              >
-                2023 Furniro. All rights reserved
-              </Link>
-            </p>
-          </div>
+        <hr />
+
+        <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
+          <p className=" text-sm text-center sm:text-left">
+            <Link to={"/"} className=" ml-1 font-extrabold">
+              2023 Furniro. All rights reserved
+            </Link>
+          </p>
         </div>
+      </div>
     </footer>
   );
 };
