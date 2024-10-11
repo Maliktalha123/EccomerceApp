@@ -1,12 +1,15 @@
 import React from "react";
 import Header from "../components/Header";
 import PageLocation from "../components/PageLocation";
+import FormForContacts from "../components/FormForContacts";
+import Footer from "../components/Footer";
+import { ClockCircleFilled, PhoneFilled } from "@ant-design/icons";
 
 const Contact = () => {
   return (
     <div>
       <PageLocation page="Contact" />
-      <div className="w-[644px] text-center m-auto">
+      <div className="w-[644px] text-center m-auto mt-8">
         <h1 className="text-4xl font-bold">Get In Touch With Us</h1>
         <p>
           For More Information About Our Product & Services. Please Feel Free To
@@ -15,34 +18,49 @@ const Contact = () => {
         </p>
       </div>
 
-
-
-
-      <div className="flex w-3/4 borderTalha m-auto">
-        <div className="borderTalha">
-          <div>
-            <h2 className="text-2xl font-bold">Address</h2>
-            <p>236 5th SE Avenue, New York NY10000, United States</p>
+      <div className="flex w-3/4 mt-16 m-auto gap-32 ">
+        <div className="flex flex-col mt-4 gap-5">
+          <div className="flex gap-6">
+            <PhoneFilled style={{ fontSize: "24px" }} />
+            <div>
+              <h2 className="text-xl font-bold">Address</h2>
+              <p>
+                236 5th SE Avenue,
+                <br /> New York NY10000, United States
+              </p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-2xl font-bold">Phone</h2>
-            <p>
-              Mobile: +(84) 546-6789
-              <br />
-              Hotline: +(84) 456-6789
-            </p>
+
+          <div className="flex gap-6">
+            <PhoneFilled style={{ fontSize: "24px" }} />
+            <div>
+              <h2 className="text-xl font-bold">Phone</h2>
+              <p>
+                Mobile: +(84) 546-6789
+                <br />
+                Hotline: +(84) 456-6789
+              </p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-2xl font-bold">Working Time</h2>
-            <p>
-              Monday-Friday: 9:00 - 22:00
-              <br />
-              Saturday-Sunday: 9:00 - 21:0
-            </p>
+
+          <div className="flex gap-6">
+            <ClockCircleFilled style={{ fontSize: "24px" }} />
+
+            <div>
+              <h2 className="text-xl font-bold">Working Time</h2>
+              <p>
+                Monday-Friday: 9:00 - 22:00
+                <br />
+                Saturday-Sunday: 9:00 - 21:00
+              </p>
+            </div>
           </div>
         </div>
-        <div className="borderTalha"></div>
+        <div className="">
+          <FormForContacts />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

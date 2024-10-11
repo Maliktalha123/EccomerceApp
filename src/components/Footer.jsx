@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className=" body-font borderTalha">
-      <div className="max-w-[1440px]  m-auto min-h-[425px] borderTalha">
+    <footer className=" body-font ">
+      <div className="max-w-[1440px]  m-auto min-h-[425px] ">
         <div className="container  px-5 py-12 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
           <div className="w-64 flex-shrink-0 md:mx-0  text-start md:text-left">
             <Link className="flex title-font font-medium   md:justify-start justify-start mb-12  text-gray-900">
