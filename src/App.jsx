@@ -8,6 +8,8 @@ import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import Favorite from "./pages/Favorite";
+import Signin from "./pages/Auth/Signin";
+import Signup from "./pages/Auth/Signup";
 import Header from "./components/Header";
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

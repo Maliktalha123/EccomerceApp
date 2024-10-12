@@ -8,6 +8,7 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
+import { Button } from "antd";
 const Header = () => {
   return (
     <header className="flex  h-[100px] font-bold">
@@ -47,6 +48,9 @@ const Header = () => {
           <Link to={"/cart"}>
             {" "}
             <ShoppingCartOutlined className="text-2xl cursor-pointer" />
+          </Link>
+          <Link to = {"/signin"}>
+          <Button type="primary"> Login</Button>
           </Link>
         </div>
       </div>
