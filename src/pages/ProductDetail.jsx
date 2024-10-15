@@ -11,15 +11,16 @@ const ProductDetail = () => {
   const singleProduct = products.filter((data) => {
     return data.id == id;
   });
-  console.log(singleProduct[0]);
+  console.log("This product =>",singleProduct[0]);
   return (
     <div className="container mx-auto">
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img
+          
               alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+              className="lg:w-1/2 w-full lg:h-auto h-32 object-cover object-center rounded"
               src={singleProduct[0].url}
             />
             <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
@@ -76,11 +77,7 @@ const ProductDetail = () => {
                 </button>
               </div>
             </div>
-            <img
-              alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-              src={singleProduct[0].url}
-            />
+
           </div>
         </div>
       </section>

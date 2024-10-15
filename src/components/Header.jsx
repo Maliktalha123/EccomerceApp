@@ -9,15 +9,17 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 
-import { Button } from "antd";
+import { Badge, Button } from "antd";
 import { auth } from "../utils/firebase";
 import { signOut } from "firebase/auth";
 import { AuthContext } from "../context/AuthContext";
+import { CartContext } from "../context/CartContext";
 
 const Header = () => {
   const Navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
+  const { cartItems } = useContext(CartContext);
   const handleLogout = () => {
     signOut(auth)
       .then(() => Navigate("/signin"))
@@ -60,8 +62,9 @@ const Header = () => {
             <HeartOutlined className="text-2xl cursor-pointer" />
           </Link>
           <Link to={"/cart"}>
-            {" "}
-            <ShoppingCartOutlined className="text-2xl cursor-pointer" />
+            <Badge count={cartItems.length}>
+              <ShoppingCartOutlined className="text-2xl cursor-pointer" />
+            </Badge>
           </Link>
 
           {user.isLogin == false ? (
