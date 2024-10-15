@@ -1,25 +1,32 @@
-import { Button, DatePicker, Form, Input } from "antd";
-
-import React from "react";
-import { auth } from "../../utils/firebase";
+import { Button, DatePicker, Form, Input, message } from "antd";
+import React, { useState } from "react";
+import { auth, db } from "../../utils/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth/cordova";
+import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  
-  const onFinish = (values) => {
-    
-    createUserWithEmailAndPassword(auth, values.email, values.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-       
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage);
-      });
+  const Navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
+  const onFinish = async (values) => {
+    console.log("Success:", values);
+    try {
+      setLoading(true);
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      Navigate("/")
+      const docRef = doc(db, "users", user.user.uid);
+      await setDoc(docRef, { ...values, uid: user.user.uid });
+      setLoading(false);
+      message.success("User account created Successfully");
+    } catch (err) {
+      message.error(err.message);
+      setLoading(false);
+    }
   };
-
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -96,9 +103,6 @@ const Signup = () => {
               width: "250px",
             }}
           />
-        </Form.Item>
-        <Form.Item label="DatePicker" name="date">
-          <DatePicker />
         </Form.Item>
 
         <Form.Item

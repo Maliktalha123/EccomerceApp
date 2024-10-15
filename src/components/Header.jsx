@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import CompanyLogo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Components.css";
 import {
   HeartOutlined,
@@ -8,8 +8,22 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
+
 import { Button } from "antd";
+import { auth } from "../utils/firebase";
+import { signOut } from "firebase/auth";
+import { AuthContext } from "../context/AuthContext";
+
 const Header = () => {
+  const Navigate = useNavigate();
+
+  const { user } = useContext(AuthContext);
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => Navigate("/signin"))
+      .catch((err) => console.log("Error in signOut => ", err));
+  };
+
   return (
     <header className="flex  h-[100px] font-bold">
       <div className="flex m-auto  w-[1286px] h-[41px]">
@@ -49,9 +63,17 @@ const Header = () => {
             {" "}
             <ShoppingCartOutlined className="text-2xl cursor-pointer" />
           </Link>
-          <Link to = {"/signin"}>
-          <Button type="primary"> Login</Button>
-          </Link>
+
+          {user.isLogin == false ? (
+            <Link to={"/signin"}>
+              <Button type="primary"> Login</Button>
+            </Link>
+          ) : (
+            <Button onClick={handleLogout} type="primary">
+              {" "}
+              Logout
+            </Button>
+          )}
         </div>
       </div>
     </header>

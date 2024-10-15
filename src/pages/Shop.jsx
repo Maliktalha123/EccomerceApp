@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/Header'
 import PageLocation from '../components/PageLocation'
+import ProductsComponent from '../components/ProductsComponent'
 
 const Shop = () => {
   return (
@@ -9,6 +10,7 @@ const Shop = () => {
  page = "Shop"
  
  />
+ <ProductsComponent />
     </div>
   )
 }

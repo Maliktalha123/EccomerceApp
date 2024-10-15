@@ -1,24 +1,24 @@
 import React from "react";
-import { Button,  Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { signInWithEmailAndPassword } from "firebase/auth/cordova";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../utils/firebase";
 
 const Signin = () => {
+  const Navigate = useNavigate();
+
   const onFinish = (values) => {
     console.log("Success:", values);
     signInWithEmailAndPassword(auth, values.email, values.password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      console.log("User Loggged Inn")
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
-
+      .then((userCredential) => {
+        const user = userCredential.user;
+        Navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage)
+      });
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -83,7 +83,6 @@ const Signin = () => {
           />
         </Form.Item>
         <Link to={"/signup"}>
-          
           <p className=" text-blue-700 text-center m-auto">I haven't account</p>
         </Link>
 
