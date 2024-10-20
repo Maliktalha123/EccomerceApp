@@ -8,8 +8,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Shop from "./pages/Shop";
-import Home from "./pages/Home";
 import About from "./pages/About";
+import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
@@ -31,7 +31,7 @@ function App() {
     if (user?.isLogin && user?.email === "talha@gmail.com") {
       return <Navigate to="/admin/products" />;
     } else if (user?.isLogin) {
-      return <Navigate to="/" />;
+      return <Navigate to="/home" />;
     } else {
       return <Signin />;
     }
@@ -42,8 +42,8 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-        <Route path="/" element={<Home />} /> 
           <Route path="/" element={getInitialRoute()} />
+          <Route path="/home" element={<Home />} />
           /* Only for admin */
           <Route
             path="/admin"
@@ -63,8 +63,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path = "/product/:id" element = {<ProductDetail />}/>
-          
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />

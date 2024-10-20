@@ -16,16 +16,17 @@ const ProductsComponent = () => {
   const { addItemToCart, isItemAdded, cartItems } = useContext(CartContext);
   const { favoriteItems, addItemToFavorite, isItemAddedInFavorites } =
     useContext(FavoriteContext);
-  console.log(cartItems);
+
   return (
     <div
       className="flex gap-4"
       style={{ flexWrap: "wrap", justifyContent: "center", textAlign: "start" }}
     >
       {products.map((data) => (
-        
+        <Link to={`/product/${data.id}`}>
+          {" "}
           <Card
-          key={data.id}
+            key={data.id}
             hoverable
             style={{
               width: 270,
@@ -46,12 +47,12 @@ const ProductsComponent = () => {
             <div className="flex mt-4 gap-4 ">
               <p className="text-2xl">{`$${data.price}`}</p>
               <div className="flex gap-2">
-              <Button
-          type="text"
-          icon={<HeartOutlined />}
-className="mt-2"          
-          onClick={() => addItemToFavorite(data)}
-        />
+                <Button
+                  type="text"
+                  icon={<HeartOutlined />}
+                  className="mt-2"
+                  onClick={() => addItemToFavorite(data)}
+                />
 
                 <Button className="my-2" onClick={() => addItemToCart(data)}>
                   {isItemAdded(data.id)
@@ -61,7 +62,7 @@ className="mt-2"
               </div>
             </div>
           </Card>
-        
+        </Link>
       ))}
     </div>
   );
