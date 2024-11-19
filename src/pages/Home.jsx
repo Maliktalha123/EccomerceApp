@@ -10,19 +10,18 @@ const Home = () => {
   const { products } = useContext(ProductContext);
   console.log("User => ", user);
   console.log("Products => ", products);
-  
+
   return (
     <div>
       <div className="text-center">
         <h1 className="text-3xl">Our Products</h1>
+        <br />
         <ProductsComponent />
         <button
-
           style={{ border: "1px solid #B88E2F", text: "#B88E2F" }}
-          className="w-36 h-10 mt-2"
-        ><Link to={'/shop'}>
-          Show More
-        </Link>
+          className="w-36 h-10 mt-2 text-xl"
+        >
+          <Link to={"/shop"}>Show More &#8594;</Link>
         </button>
       </div>
       <Footer />

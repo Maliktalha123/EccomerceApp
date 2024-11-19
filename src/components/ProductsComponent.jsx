@@ -22,48 +22,58 @@ const ProductsComponent = () => {
       className="flex gap-4"
       style={{ flexWrap: "wrap", justifyContent: "center", textAlign: "start" }}
     >
-      {products.map((data) => (
-        <Link to={`/product/${data.id}`}>
-          {" "}
-          <Card
-            key={data.id}
-            hoverable
-            style={{
-              width: 270,
-              height: 340,
-            }}
-            cover={
-              <img
-                style={{
-                  height: 200,
-                }}
-                alt="example"
-                src={data.url}
-              />
-            }
-          >
-            <Meta title={data.title} description={data.desc} />
-
-            <div className="flex mt-4 gap-4 ">
-              <p className="text-2xl">{`$${data.price}`}</p>
-              <div className="flex gap-2">
-                <Button
-                  type="text"
-                  icon={<HeartOutlined />}
-                  className="mt-2"
-                  onClick={() => addItemToFavorite(data)}
+      {products.map((data) => {
+        let discription = data.desc;
+       
+        
+        return(
+          <Link to={`/product/${data.id}`} key={data.id}>
+            {" "}
+            <Card
+              hoverable
+              style={{
+                width: 270,
+                height: 400,
+              }}
+              cover={
+                <img
+                  style={{
+                    height: 200,
+                  }}
+                  alt="example"
+                  src={data.url}
                 />
+              }
+            >
+              <Meta
+                title={data.title}
+                description={`${discription.slice(0,50)}...see more`}
+                style={{
+                  width: 245,
+                }}
+              />
 
-                <Button className="my-2" onClick={() => addItemToCart(data)}>
-                  {isItemAdded(data.id)
-                    ? `Added (${isItemAdded(data.id).quantity})`
-                    : `Add to Cart`}
-                </Button>
+              <div className="flex mt-4 gap-4 ">
+                <p className="text-2xl">{`$${data.price}`}</p>
+                <div className="flex gap-2">
+                  <Button
+                    type="text"
+                    icon={<HeartOutlined />}
+                    className="mt-2"
+                    onClick={() => addItemToFavorite(data)}
+                  />
+
+                  <Button className="my-2" onClick={() => addItemToCart(data)}>
+                    {isItemAdded(data.id)
+                      ? `Added (${isItemAdded(data.id).quantity})`
+                      : `Add to Cart`}
+                  </Button>
+                </div>
               </div>
-            </div>
-          </Card>
-        </Link>
-      ))}
+            </Card>
+          </Link>
+        );
+      })}
     </div>
   );
 };

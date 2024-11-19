@@ -24,22 +24,22 @@ const Footer = () => {
               </h2>
               <nav className="list-none flex flex-col gap-8 mt-8 font-bold">
                 <li>
-                  <Link className="text-gray-600 hover:text-gray-800">
+                  <Link className="text-gray-600 hover:text-gray-800" to={"/home"}>
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-gray-600 hover:text-gray-800">
+                  <Link className="text-gray-600 hover:text-gray-800" to={"/shop"}>
                     Shop
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-gray-600 hover:text-gray-800">
+                  <Link className="text-gray-600 hover:text-gray-800" to={"/about"}>
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-gray-600 hover:text-gray-800">
+                  <Link className="text-gray-600 hover:text-gray-800" to={"/contact"}>
                     Contact
                   </Link>
                 </li>

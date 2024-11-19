@@ -8,8 +8,8 @@ const Shop = () => {
     <div>
  <PageLocation 
  page = "Shop"
- 
  />
+ <br />
  <ProductsComponent />
     </div>
   )

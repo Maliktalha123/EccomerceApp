@@ -17,40 +17,40 @@ import { UploadOutlined } from "@ant-design/icons";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 function AddProductDrawer({ open, onClose }) {
-const [imageUpload,setImageUpload] = useState(null)
+  const [imageUpload, setImageUpload] = useState(null);
 
   const [form] = useForm();
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
     console.log("Success:", values);
-console.log(values)
-console.log(imageUpload)
+    console.log(values);
+    console.log(imageUpload);
 
-const imagesRef = ref(storage, `images/${imageUpload.name}`);
+    const imagesRef = ref(storage, `images/${imageUpload.name}`);
 
- try {
+    try {
       setLoading(true);
 
-      await uploadBytes(ref(storage,imagesRef), imageUpload).then((snapshot) => {
-        console.log("Uploaded a blob or file!");
-      });
+      await uploadBytes(ref(storage, imagesRef), imageUpload).then(
+        (snapshot) => {
+          console.log("Uploaded a blob or file!");
+        }
+      );
 
       await getDownloadURL(ref(imagesRef))
         .then((url) => {
           console.log("Photos url => ", url);
           const ref = collection(db, "products");
-          addDoc(ref, {...values,url});
+          addDoc(ref, { ...values, url });
         })
         .catch((err) => console.log("Error in getting Url", err));
 
-      
-       form.resetFields();
+      form.resetFields();
       setLoading(false);
       onClose();
-     message.success("Product ADDED Successfully");
-    }
-     catch (err) {
+      message.success("Product ADDED Successfully");
+    } catch (err) {
       message.error(err.message);
       setLoading(false);
     }
@@ -72,12 +72,25 @@ const imagesRef = ref(storage, `images/${imageUpload.name}`);
         autoComplete="off"
       >
         <Form.Item
+          label="Category"
+          name="category"
+          rules={[
+            {
+              required: true,
+              message: "Please input Category!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
           label="Product Name"
           name="title"
           rules={[
             {
               required: true,
-              message: "Please input your username!",
+              message: "Please input your product name!",
             },
           ]}
         >
@@ -96,7 +109,11 @@ const imagesRef = ref(storage, `images/${imageUpload.name}`);
           <Input />
         </Form.Item>
         <Form.Item label="Uplaoad Photo" name="image">
-          <input type="file" onChange={(e)=>setImageUpload(e.target.files[0])} placeholder="Upload a File" />
+          <input
+            type="file"
+            onChange={(e) => setImageUpload(e.target.files[0])}
+            placeholder="Upload a File"
+          />
           {/* <button>Save Image</button> */}
         </Form.Item>
 
@@ -112,7 +129,7 @@ const imagesRef = ref(storage, `images/${imageUpload.name}`);
         >
           <Input />
         </Form.Item>
-       
+
         <Form.Item
           wrapperCol={{
             offset: 8,

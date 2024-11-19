@@ -7,7 +7,7 @@ import { ProductContext } from "../context/ProductsContext";
 
 function ProductsList() {
   const { products, setProducts } = useContext(ProductContext);
-//   const [products, setProducts] = useState([]);
+  //   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function ProductsList() {
           allProducts.push({ ...product.data(), id: product.id });
         });
         setProducts([...allProducts]);
-        console.log(products)
+        console.log(products);
         setLoading(false);
       }
     } catch (err) {
@@ -34,6 +34,11 @@ function ProductsList() {
     }
   };
   const columns = [
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+    },
     {
       title: "Title",
       dataIndex: "title",
@@ -46,16 +51,16 @@ function ProductsList() {
       render: (data) => <Image src={data} height={50} width={50} />,
     },
     {
-title:"Discription",
-dataIndex:"desc",
-key:"desc"
+      title: "Discription",
+      dataIndex: "desc",
+      key: "desc",
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
     },
-   
+
     {
       title: "Action",
       key: "action",
