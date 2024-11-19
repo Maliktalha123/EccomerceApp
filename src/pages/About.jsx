@@ -5,6 +5,7 @@ import PageLocation from "../components/PageLocation";
 const About = () => {
   return <div>
     <PageLocation page="About"/>
+    
   </div>;
 };
 

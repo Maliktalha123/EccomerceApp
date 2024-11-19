@@ -24,9 +24,8 @@ const ProductsComponent = () => {
     >
       {products.map((data) => {
         let discription = data.desc;
-       
-        
-        return(
+
+        return (
           <Link to={`/product/${data.id}`} key={data.id}>
             {" "}
             <Card
@@ -47,7 +46,7 @@ const ProductsComponent = () => {
             >
               <Meta
                 title={data.title}
-                description={`${discription.slice(0,50)}...see more`}
+                description={`${discription.slice(0, 50)}...see more`}
                 style={{
                   width: 245,
                 }}
