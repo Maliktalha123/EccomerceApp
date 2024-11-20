@@ -25,14 +25,15 @@ const onFinish = (values) => {
 const CheckOutForm = () => {
   const [form] = Form.useForm();
   return (
-    <div className="ml-12">
+    <div className="">
       <Form
         onFinish={onFinish}
         {...formItemLayout}
         form={form}
         variant={"outlined"}
         style={{
-          maxWidth: 600,
+          maxWidth: 900,
+          minWidth:2
         }}
         initialValues={{
           variant: "outlined",
@@ -84,7 +85,8 @@ const CheckOutForm = () => {
           rules={[
             {
               required: true,
-              message: "Please input Email!",
+              type: "email",
+              message: "Please input email correctly!",
             },
           ]}
         >
