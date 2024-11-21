@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { signInWithEmailAndPassword } from "firebase/auth/cordova";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../utils/firebase";
@@ -12,12 +12,13 @@ const Signin = () => {
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then((userCredential) => {
         const user = userCredential.user;
+        message.success("Logged Inn successfully...")
         Navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage)
+        message.error(errorMessage)
       });
   };
   const onFinishFailed = (errorInfo) => {

@@ -23,9 +23,9 @@ function AddProductDrawer({ open, onClose }) {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
-    console.log(values);
-    console.log(imageUpload);
+    // console.log("Success:", values);
+    // console.log(values);
+    // console.log(imageUpload);
 
     const imagesRef = ref(storage, `images/${imageUpload.name}`);
 
@@ -40,7 +40,7 @@ function AddProductDrawer({ open, onClose }) {
 
       await getDownloadURL(ref(imagesRef))
         .then((url) => {
-          console.log("Photos url => ", url);
+          // console.log("Photos url => ", url);
           const ref = collection(db, "products");
           addDoc(ref, { ...values, url });
         })

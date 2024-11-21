@@ -19,7 +19,9 @@ const formItemLayout = {
     },
   },
 };
-const onFinish = (values) => {
+export let CheckOutValues;
+ const onFinish = (values) => {
+CheckOutValues = values
   console.log("Received values of form: ", values);
 };
 const CheckOutForm = () => {
@@ -33,7 +35,7 @@ const CheckOutForm = () => {
         variant={"outlined"}
         style={{
           maxWidth: 900,
-          minWidth:2
+          minWidth: 270,
         }}
         initialValues={{
           variant: "outlined",

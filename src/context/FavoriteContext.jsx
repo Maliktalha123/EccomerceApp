@@ -8,7 +8,7 @@ function FavoriteContextProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
-  }, [favoriteItems]);
+  }, [addItemToFavorite,removeItemFromFavorite,isItemAddedInFavorites]);
 
   useEffect(() => {
     const itemsFromStorage = localStorage.getItem("favoriteItems");
@@ -18,10 +18,12 @@ function FavoriteContextProvider({ children }) {
   }, []);
 
   // Functions
-
+console.log("Favorite Items",favoriteItems)
   function addItemToFavorite(item) {
+    // console.log("Item from Favorite department",item.id)
     const arr = favoriteItems;
     const itemIndex = favoriteItems.findIndex((data) => data.id == item.id);
+    
     if (itemIndex == -1) {
       arr.push(item);
     } else {

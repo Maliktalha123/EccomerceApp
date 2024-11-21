@@ -1,13 +1,33 @@
 import React, { useContext } from "react";
-import CheckOutForm from "../components/CheckOutForm";
+import CheckOutForm, { CheckOutValues } from "../components/CheckOutForm";
 import { CartContext } from "../context/CartContext";
-import { Button } from "antd";
+import { Button, message, Upload } from "antd";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../utils/firebase";
+import { AuthContext } from "../context/AuthContext";
 
 const CheckOut = () => {
   const { cartItems } = useContext(CartContext);
-  console.log("Cart Items = > ", cartItems);
+  const { user } = useContext(AuthContext);
+  // console.log("CheckOut form => ", CheckOutValues);
+
+  const uploadSale = () => {
+    if (!CheckOutValues) message.error("Please Submit Your Information");
+    else {
+      console.log("Upload Started")
+
+      const docRef = doc(db, "sales", user.uid);
+      setDoc(docRef, { CheckOutValues, totalPrice, soldItems : cartItems });
+      console.log("Upload Completed")
+
+    }
+  };
+  // console.log("User =>", user.uid);
+
+  let totalPrice = 45000;
+
   return (
-    <div className="flex w-2/3 mx-auto justify-between" >
+    <div className="flex w-2/3 mx-auto justify-between">
       <div>
         <CheckOutForm />
       </div>
@@ -37,7 +57,7 @@ const CheckOut = () => {
           </p>
         </div>
         <hr className="mt-4" />
-        <div  className="flex gap-4 flex-col">
+        <div className="flex gap-4 flex-col">
           <p className="text-xl">Direct Bank Transfer</p>
           <p>
             Make your payment directly into our bank account. Please use your
@@ -45,11 +65,22 @@ const CheckOut = () => {
             until the funds have cleared in our account.
           </p>
           <div className="flex flex-col gap-3">
-         <div> <input type="radio" value="bank-transfer" /> Direct Bank Transfer</div>
-          <div><input type="radio" value="cash-on-delievery" /> Cash on Delievery</div>
+            <div>
+              {" "}
+              <input type="radio" value="bank-transfer" /> Direct Bank Transfer
+            </div>
+            <div>
+              <input type="radio" value="cash-on-delievery" /> Cash on Delievery
+            </div>
           </div>
-          <p>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.  </p>
-          <Button className="w-2/3 m-auto">Place Order</Button>
+          <p>
+            Your personal data will be used to support your experience
+            throughout this website, to manage access to your account, and for
+            other purposes described in our privacy policy.{" "}
+          </p>
+          <Button className="w-2/3 m-auto" onClick={uploadSale}>
+            Place Order
+          </Button>
         </div>
       </div>
     </div>
