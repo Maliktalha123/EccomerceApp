@@ -20,45 +20,56 @@ const Header = () => {
 
   const { user } = useContext(AuthContext);
   const { cartItems } = useContext(CartContext);
+
   const handleLogout = () => {
     signOut(auth)
       .then(() => Navigate("/signin"))
       .catch((err) => console.log("Error in signOut => ", err));
   };
 
+  console.log("User => ", user?.email);
+
+  // Conditional rendering based on email
+  if (user?.email === "talha@gmail.com") {
+    return <h1>Hello, I am Admin</h1>;
+  }
+else{ 
+
   return (
-    <header className="flex  h-[100px] font-bold">
-      <div className="flex m-auto  w-[1286px] h-[41px]">
+    <header className="flex h-[100px] font-bold">
+      <div className="flex m-auto w-[1286px] h-[41px]">
         <Link
           to={"/"}
-          className="flex  title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+          className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
         >
           <img src={CompanyLogo} alt="Inkfjjf" />
         </Link>
-        <nav className="md:ml-auto  md:mr-auto flex flex-wrap w-[430px] h-[24px] items-center m-auto text-base justify-center ">
-          <Link to={"/"} className="mr-5 hover:text-gray-900">
+        <nav className="md:ml-auto md:mr-auto flex flex-wrap w-[430px] h-[24px] items-center m-auto text-base justify-center">
+          <Link to={"/"} className="mr-5 hover:text-gray-700 cursor-pointer hover:underline">
             Home
           </Link>
-          <Link to={"/shop"} className="mr-5 hover:text-gray-900">
+          <Link to={"/shop"} className="mr-5 hover:text-gray-700 cursor-pointer hover:underline">
             Shop
           </Link>
-          <Link to={"/about"} className="mr-5 hover:text-gray-900">
+          <Link to={"/about"} className="mr-5 hover:text-gray-700 cursor-pointer hover:underline">
             About
           </Link>
-          <Link to={"/contact"} className="mr-5 hover:text-gray-900">
+          <Link to={"/contact"} className="mr-5 hover:text-gray-700 cursor-pointer hover:underline">
             Contact
           </Link>
+          <Link to={"/myorders"} className="mr-5 hover:text-gray-700 cursor-pointer hover:underline">
+            My Orders
+          </Link>
         </nav>
-        <div className="flex items-center text-base justify-around  w-56 mr-8">
+        <div className="flex items-center text-base justify-around w-56 mr-8">
           <Link to={"/profile"}>
             <ProfileOutlined className="text-2xl cursor-pointer" />
+      
           </Link>
           <Link to={"/search"}>
-            {" "}
             <SearchOutlined className="text-2xl cursor-pointer" />
           </Link>
           <Link to={"/favorite"}>
-            {" "}
             <HeartOutlined className="text-2xl cursor-pointer" />
           </Link>
           <Link to={"/cart"}>
@@ -67,20 +78,19 @@ const Header = () => {
             </Badge>
           </Link>
 
-          {user.isLogin == false ? (
+          {user?.isLogin === false ? (
             <Link to={"/signin"}>
               <Button type="primary"> Login</Button>
             </Link>
           ) : (
             <Button onClick={handleLogout} type="primary">
-              {" "}
               Logout
             </Button>
           )}
         </div>
       </div>
     </header>
-  );
+  );}
 };
 
 export default Header;

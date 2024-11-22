@@ -24,6 +24,7 @@ import Products from "./pages/Admin/Product";
 import Soldout from "./pages/Admin/Soldout";
 import ProductDetail from "./pages/ProductDetail";
 import CheckOut from "./pages/CheckOut";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -72,6 +73,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/favorite" element={<Favorite />} />
           <Route path="/checkout" element={<CheckOut/>}/>
+          <Route path="/myorders" element={<MyOrders/>}/>
         </Routes>
       </BrowserRouter>
     </>

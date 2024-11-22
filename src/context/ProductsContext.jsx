@@ -18,6 +18,7 @@ function ProductContextProvider({ children }) {
       setLoading(true);
       const ref = collection(db, "products");
       const productData = await getDocs(ref);
+      console.log("I am here.....",productData)
       if (!productData.empty) {
         const allProducts = [];
         productData.forEach((product) => {

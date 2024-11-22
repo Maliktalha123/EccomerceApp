@@ -17,7 +17,7 @@ const CheckOut = () => {
       console.log("Upload Started")
 
       const docRef = doc(db, "sales", user.uid);
-      setDoc(docRef, { CheckOutValues, totalPrice, soldItems : cartItems });
+      setDoc(docRef, [{ CheckOutValues, totalPrice, soldItems : cartItems }]);
       console.log("Upload Completed")
 
     }
