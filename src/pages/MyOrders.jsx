@@ -135,7 +135,7 @@ export default function OrderDetails({
       </Title>
       <Row gutter={[16, 16]}>
         {soldItems.map((item) => (
-          <Col xs={24} sm={12} md={8} key={item.id}>
+          <Col  xs={24} sm={12} md={8} key={item.id}>
             <Card
               cover={<Image alt={item.title} src={item.url} maxwidth={300} height={250}/>}
               actions={[

@@ -25,6 +25,7 @@ import Soldout from "./pages/Admin/Soldout";
 import ProductDetail from "./pages/ProductDetail";
 import CheckOut from "./pages/CheckOut";
 import MyOrders from "./pages/MyOrders";
+import ContactRequest from "./pages/Admin/ContactRequest";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -60,6 +61,8 @@ function App() {
             <Route path="users" element={<Users />} />
             <Route path="products" element={<Products />} />
             <Route path="purchases" element={<Soldout />} />
+            <Route path="contactrequests" element={<ContactRequest />} />
+
             {/* <Route path="reports" element={<Rep />} /> */}
           </Route>
           
