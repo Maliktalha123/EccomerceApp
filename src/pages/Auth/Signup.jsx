@@ -22,7 +22,7 @@ const Signup = () => {
         (snapshot) => {
           console.log("Uploaded a blob or file!");
         }
-      );
+      )
 
       const user = await createUserWithEmailAndPassword(
         auth,

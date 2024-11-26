@@ -2,8 +2,8 @@ import React from 'react'
 
 const ContactRequest = () => {
   return (
-    <div>
-      ccccccccccccccccccccccccc
+    <div className='text-2xl'>
+     Contact REquests Page
     </div>
   )
 }

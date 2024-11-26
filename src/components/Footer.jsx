@@ -12,41 +12,14 @@ const Footer = () => {
             <Link className="flex title-font font-medium   md:justify-start justify-start mb-12  text-gray-900">
               <span className="ml-3 text-xl">Funiro.</span>
             </Link>
-            <p className="mt-2 text-start text-sm text-gray-500">
-              400 University Drive Suite 200 Coral <br /> Gabies <br />
+            <p className="mt-2 text-start flex float-left text-sm text-gray-500 ">
+              400 University Drive Suite 200 Coral  Gabies 
               FL 33134 USA
             </p>
           </div>
-          <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
-            <div className="lg:w-1/4 md:w-1/2  w-full px-4">
-              <h2 className="title-font font-normal text-gray-900 tracking-widest text-sm mb-3">
-                CATEGORIES
-              </h2>
-              <nav className="list-none flex flex-col gap-8 mt-8 font-bold">
-                <li>
-                  <Link className="text-gray-600 hover:text-gray-800" to={"/home"}>
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-gray-600 hover:text-gray-800" to={"/shop"}>
-                    Shop
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-gray-600 hover:text-gray-800" to={"/about"}>
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-gray-600 hover:text-gray-800" to={"/contact"}>
-                    Contact
-                  </Link>
-                </li>
-              </nav>
-            </div>
+          <div className="flex-grow flex flex-wrap  -mb-10 md:mt-0 mt-10 md:text-left text-center">
             <div className="lg:w-1/4 md:w-1/2 w-full  px-4">
-              <h2 className="title-font font-normal text-gray-900 tracking-widest text-sm mb-3">
+              <h2 className="title-font font-normal text-gray-900 tracking-widest sm:w-1/3 text-sm mb-3">
                 Help
               </h2>
               <nav className="list-none font-bold flex flex-col gap-8 mt-8">

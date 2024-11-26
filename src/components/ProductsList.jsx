@@ -7,32 +7,7 @@ import { ProductContext } from "../context/ProductsContext";
 
 function ProductsList() {
   const { products, setProducts } = useContext(ProductContext);
-  //   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getProductsFromDB();
-  }, []);
-
-  const getProductsFromDB = async () => {
-    try {
-      setLoading(true);
-      const ref = collection(db, "products");
-      const productData = await getDocs(ref);
-      if (!productData.empty) {
-        const allProducts = [];
-        productData.forEach((product) => {
-          allProducts.push({ ...product.data(), id: product.id });
-        });
-        setProducts([...allProducts]);
-        console.log(products);
-        setLoading(false);
-      }
-    } catch (err) {
-      message.error(err.message);
-      setLoading(false);
-    }
-  };
   const columns = [
     {
       title: "Category",

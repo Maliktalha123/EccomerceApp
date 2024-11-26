@@ -3,11 +3,13 @@ import { CartContext } from "../context/CartContext";
 import { Button, Image } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Cart = () => {
   const { cartItems, removeItemFromCart, addItemToCart, lessQuanityFromCart } =
     useContext(CartContext);
   console.log(cartItems);
+  const { user } = useContext(AuthContext);
   const totalAmount = cartItems.reduce(
     (total, obj) => total + obj.quantity * obj.price,
     0
@@ -16,7 +18,6 @@ const Cart = () => {
     (total, obj) => total + obj.quantity,
     0
   );
-
   return (
     <div className="container mx-auto my-5">
       <h1 className="font-medium text-3xl underline">Cart Items</h1>
@@ -28,15 +29,30 @@ const Cart = () => {
             {totalQuantity}
           </h1>
         </div>
-        <div className="flex-grow flex flex-col border p-4 justify-center items-center">
+        <div className="flex-grow flex flex-col border lg:p-4 sm:p-2 justify-center items-center">
           <h1>Total Amount</h1>
-          <h1 className="font-semibold font-mono mt-3 text-3xl">
+          <h1 className="font-semibold font-mono mt-3 lg:text-3xl sm:text-base">
             ${Math.round(totalAmount)}
           </h1>
         </div>
-        <Link to={'/checkout'}><div className="flex-grow flex flex-col border p-4 justify-center items-center">
-          <h1>Checkout</h1>
-        </div></Link>
+
+        {user.isLogin ? (
+          <Link to={"/checkout"}>
+            <div className="flex-grow flex flex-col border lg:p-4 sm:p-2 justify-center items-center">
+              <h1 className="font-semibold font-mono mt-3 lg:text-3xl sm:text-base">
+                Checkout
+              </h1>
+            </div>
+          </Link>
+        ) : (
+          <Link to={"/signin"}>
+            <div className="flex-grow flex flex-col border lg:p-4 sm:p-2 justify-center items-center ">
+              <h1 className=" font-mono mt-3 lg:text-3xl sm:text-base">
+                Login First!
+              </h1>
+            </div>
+          </Link>
+        )}
       </div>
 
       {cartItems.map((data) => {

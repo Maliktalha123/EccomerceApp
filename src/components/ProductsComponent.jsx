@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ProductContext } from "../context/ProductsContext";
-import { Button, Card } from "antd";
+import { Button, Card, message } from "antd";
 import Meta from "antd/es/card/Meta";
 import {
   HeartFilled,
@@ -10,13 +10,14 @@ import {
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { FavoriteContext } from "../context/FavoriteContext";
+import { AuthContext } from "../context/AuthContext";
 
 const ProductsComponent = () => {
   const { products } = useContext(ProductContext);
   const { addItemToCart, isItemAdded, cartItems } = useContext(CartContext);
   const { favoriteItems, addItemToFavorite, isItemAddedInFavorites } =
     useContext(FavoriteContext);
-
+  const { user } = useContext(AuthContext);
   return (
     <div
       className="flex gap-4"
@@ -62,7 +63,14 @@ const ProductsComponent = () => {
                     onClick={() => addItemToFavorite(data)}
                   />
 
-                  <Button className="my-2" onClick={() => addItemToCart(data)}>
+                  <Button
+                    className="my-2"
+                    onClick={() => {
+                      if (!user) return message.error("Please Login First");
+
+                      addItemToCart(data);
+                    }}
+                  >
                     {isItemAdded(data.id)
                       ? `Added (${isItemAdded(data.id).quantity})`
                       : `Add to Cart`}
