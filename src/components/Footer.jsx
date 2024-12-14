@@ -12,7 +12,7 @@ const Footer = () => {
             <Link className="flex title-font font-medium   md:justify-start justify-start mb-12  text-gray-900">
               <span className="ml-3 text-xl">Funiro.</span>
             </Link>
-            <p className="mt-2 text-start flex float-left text-sm text-gray-500 ">
+            <p className="mt-2 text-start  text-sm text-gray-500 ">
               400 University Drive Suite 200 Coral  Gabies 
               FL 33134 USA
             </p>

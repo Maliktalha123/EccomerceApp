@@ -2,24 +2,36 @@ import React, { useContext } from "react";
 import CheckOutForm, { CheckOutValues } from "../components/CheckOutForm";
 import { CartContext } from "../context/CartContext";
 import { Button, message, Upload } from "antd";
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, doc, setDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CheckOut = () => {
   const { cartItems } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   // console.log("CheckOut form => ", CheckOutValues);
-
+  const Navigate = useNavigate();
   const uploadSale = () => {
-    if (!CheckOutValues) message.error("Please Submit Your Information");
-    else {
-      console.log("Upload Started")
-
+    if (!CheckOutValues) message.error("Please Submit Your Information first!");
+    if (CheckOutValues) {
+      console.log("Upload Started.....");
+console.log("User UID => ", user)
       const docRef = doc(db, "sales", user.uid);
-      setDoc(docRef, [{ CheckOutValues, totalPrice, soldItems : cartItems }]);
-      console.log("Upload Completed")
+      console.log("Checkout => ",CheckOutValues)
+      console.log("Cart Items => ",cartItems)
+      const saleData = {
+        userInfo: CheckOutValues, // Rename as needed
+        totalPrice,
+        soldItems: cartItems,
+        timestamp: new Date(), // Optional: Add a timestamp for sorting
+      };
 
+
+ 
+      addDoc(docRef, saleData);
+      console.log("Upload Completed");
+      Navigate("/");
     }
   };
   // console.log("User =>", user.uid);

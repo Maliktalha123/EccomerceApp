@@ -5,25 +5,29 @@ export const FavoriteContext = createContext();
 
 function FavoriteContextProvider({ children }) {
   const [favoriteItems, setFavoriteItems] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
-  }, [addItemToFavorite,removeItemFromFavorite,isItemAddedInFavorites]);
+    if (isLoaded) {
+      localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
+    }
+  }, [addItemToFavorite, removeItemFromFavorite, isItemAddedInFavorites]);
 
   useEffect(() => {
     const itemsFromStorage = localStorage.getItem("favoriteItems");
     if (itemsFromStorage) {
       setFavoriteItems([...JSON.parse(itemsFromStorage)]);
+      setIsLoaded(true);
     }
   }, []);
 
   // Functions
-console.log("Favorite Items",favoriteItems)
+  console.log("Favorite Items", favoriteItems);
   function addItemToFavorite(item) {
     // console.log("Item from Favorite department",item.id)
     const arr = favoriteItems;
     const itemIndex = favoriteItems.findIndex((data) => data.id == item.id);
-    
+
     if (itemIndex == -1) {
       arr.push(item);
     } else {

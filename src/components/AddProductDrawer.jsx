@@ -9,7 +9,7 @@ import {
   Upload,
 } from "antd";
 
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection} from "firebase/firestore";
 import { useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import { db, auth, storage } from "../utils/firebase";

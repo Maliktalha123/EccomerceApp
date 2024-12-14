@@ -46,7 +46,7 @@ const Cart = () => {
           </Link>
         ) : (
           <Link to={"/signin"}>
-            <div className="flex-grow flex flex-col border lg:p-4 sm:p-2 justify-center items-center ">
+            <div className="flex-grow flex flex-col border lg:p-4 sm:p-2   justify-center items-center ">
               <h1 className=" font-mono mt-3 lg:text-3xl sm:text-base">
                 Login First!
               </h1>
