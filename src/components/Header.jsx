@@ -100,7 +100,9 @@ const ResponsiveHeader = ({ user, cartItems, handleLogout, CompanyLogo }) => {
       <header className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center">
+          
+          <div className={`${isMenuOpen ? "hidden" : "flex"} gap-6 mt-2`}>
+            <Link to="/" className="flex items-center ">
               <img src={CompanyLogo} alt="Company Logo" className="h-10" />
             </Link>
 
@@ -110,7 +112,7 @@ const ResponsiveHeader = ({ user, cartItems, handleLogout, CompanyLogo }) => {
             >
               <MenuOutlined className="text-2xl" />
             </button>
-
+            </div>
             <nav
               className={`${
                 isMenuOpen ? "block" : "hidden"
@@ -163,7 +165,14 @@ const ResponsiveHeader = ({ user, cartItems, handleLogout, CompanyLogo }) => {
           </div>
 
           {isMenuOpen && (
-            <div className="lg:hidden mt-4 flex flex-col items-center space-y-4">
+            <div className="lg:hidden mt-2 flex flex-col  space-y-4">
+
+            <button
+            onClick={toggleMenu}
+            className="lg:hidden text-left text-gray-600 focus:outline-none"
+          >
+            <MenuOutlined className="text-2xl" />
+          </button>
               <Link to="/profile">
                 <ProfileOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
               </Link>

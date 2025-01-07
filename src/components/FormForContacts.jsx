@@ -26,11 +26,8 @@ const FormForContacts = () => {
   return (
     <Form
       name="nest-messages"
-      layout="vertical"
       onFinish={onFinish}
       style={{
-        maxWidth: 600,
-
         width: "350px",
         display: "flex",
         flexDirection: "column",

@@ -31,7 +31,7 @@ const ProductsComponent = () => {
             <Card
               hoverable
               style={{
-                width: 270,
+                maxWidth: 270,
                 height: 400,
               }}
               cover={

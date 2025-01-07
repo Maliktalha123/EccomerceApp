@@ -8,8 +8,8 @@ import {
   message,
   Upload,
 } from "antd";
-
-import { addDoc, collection} from "firebase/firestore";
+("https://www.instagram.com/reel/DDe77p6ToHD/?utm_source=ig_web_copy_link");
+import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import { db, auth, storage } from "../utils/firebase";
@@ -23,10 +23,6 @@ function AddProductDrawer({ open, onClose }) {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
-    // console.log("Success:", values);
-    // console.log(values);
-    // console.log(imageUpload);
-
     const imagesRef = ref(storage, `images/${imageUpload.name}`);
 
     try {
