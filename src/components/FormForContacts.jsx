@@ -27,29 +27,18 @@ const FormForContacts = () => {
     <Form
       name="nest-messages"
       onFinish={onFinish}
-      style={{
-        width: "350px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "12px",
-      }}
+      className="flex flex-col gap-4"
+      style={{ width: "100%" }}
       validateMessages={validateMessages}
     >
       <Form.Item
         name={["user", "name"]}
         label="Your Name"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
+        rules={[{ required: true }]}
       >
         <Input maxLength={30} />
       </Form.Item>
+
       <Form.Item name={["user", "email"]} label="Email">
         <Input maxLength={30} />
       </Form.Item>
@@ -57,35 +46,20 @@ const FormForContacts = () => {
       <Form.Item
         name={["user", "subject"]}
         label="Subject"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+        rules={[{ required: true }]}
       >
-        <Input maxLength={100} size="large" />
+        <Input maxLength={100} />
       </Form.Item>
+
       <Form.Item
         name={["user", "Message"]}
         label="Message"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+        rules={[{ required: true }]}
       >
         <Input.TextArea />
       </Form.Item>
-      <Form.Item
-        wrapperCol={{
-          ...layoutt.wrapperCol,
-          offset: 8,
-        }}
-        style={{
-          display: "flex",
-          alignItems: "start",
-        }}
-      >
+
+      <Form.Item>
         <Button
           type="primary"
           htmlType="submit"
@@ -99,6 +73,7 @@ const FormForContacts = () => {
         </Button>
       </Form.Item>
     </Form>
+  
   );
 };
 

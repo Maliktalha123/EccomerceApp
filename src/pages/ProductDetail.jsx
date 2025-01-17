@@ -12,7 +12,7 @@ const ProductDetail = () => {
 
   console.log("PArams Like ID =>  ", id);
   const { products } = useContext(ProductContext);
-  const { addItemToCart, isItemAdded, cartItems } = useContext(CartContext);
+  const { addItemToCart, isItemAdded } = useContext(CartContext);
   const { addItemToFavorite } = useContext(FavoriteContext);
 
   const singleProduct = products.filter((data) => {
@@ -23,10 +23,10 @@ const ProductDetail = () => {
     <div className="container mx-auto">
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap ">
+          <div className="lg:w-4/5 mx-auto flex flex-wrap gap-12">
             <img
               alt="ecommerce"
-              className="lg:w-1/2 w-full lg:h-auto h-32 object-cover object-center rounded "
+              className="lg:w-1/3 w-full lg:h-auto h-32 object-cover object-center rounded "
               src={singleProduct[0].url}
             />
             <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
@@ -65,24 +65,29 @@ const ProductDetail = () => {
                   ${singleProduct[0].price}
                 </span>
                 <div className="flex gap-4">
-                <Button
-                  type="text"
-                  icon={<HeartOutlined />}
-                  className="mt-2"
-                  onClick={() => addItemToFavorite(singleProduct[0])}
-                />
+                  <Button
+                    type="text"
+                    icon={<HeartOutlined />}
+                    className="mt-2"
+                    onClick={() => addItemToFavorite(singleProduct[0])}
+                  />
 
-                <Button className="my-2" onClick={() => addItemToCart(singleProduct[0])}>
-                  {isItemAdded(singleProduct[0].id)
-                    ? `Added (${isItemAdded(singleProduct[0].id).quantity})`
-                    : `Add to Cart`}
-                </Button>
+                  <Button
+                    className="my-2"
+                    onClick={() => addItemToCart(singleProduct[0])}
+                  >
+                    {isItemAdded(singleProduct[0].id)
+                      ? `Added (${isItemAdded(singleProduct[0].id).quantity})`
+                      : `Add to Cart`}
+                  </Button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <hr />
+      <Footer />
     </div>
   );
 };
