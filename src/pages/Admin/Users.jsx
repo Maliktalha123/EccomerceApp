@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
-import { collection, getDocs } from "firebase/firestore";
-import { Avatar, Image, message, Table } from "antd";
+import { collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { Avatar, Button, Image, Input, message, Modal, Table } from "antd";
 import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
 
 const Users = () => {
   const [loading, setLoading] = useState(true);
+  const [editingUser, setEditingUser] = useState(null);
   const [users, setUsers] = useState([]);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   useEffect(() => {
     getUsersFromDB();
@@ -30,6 +32,41 @@ const Users = () => {
       setLoading(false);
     }
   }
+
+  // Delete user from Firestore
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "users", id));
+      setUsers(users.filter((user) => user.id !== id));
+      message.success("User deleted successfully.");
+    } catch (err) {
+      message.error("Failed to delete user: " + err.message);
+    }
+  };
+
+  // Open edit modal
+  const handleEdit = (user) => {
+    setEditingUser(user);
+    setIsEditModalVisible(true);
+  };
+
+  // Save edited user data
+  const handleSave = async () => {
+    try {
+      const { id, name, email, number } = editingUser;
+      const userRef = doc(db, "users", id);
+      await updateDoc(userRef, { name, email, number });
+      setUsers(
+        users.map((user) =>
+          user.id === id ? { ...user, name, email, number } : user
+        )
+      );
+      message.success("User updated successfully.");
+      setIsEditModalVisible(false);
+    } catch (err) {
+      message.error("Failed to update user: " + err.message);
+    }
+  };
 
   console.log("Users for Admin Panel", users);
   const columns = [
@@ -61,18 +98,65 @@ const Users = () => {
     {
       title: "Action",
       key: "action",
-      render: () => {
+      render: (record) => {
         return (
           <div className="flex gap-5">
-            <DeleteOutlined className="text-red-600" />
-            <EditOutlined className="text-blue-600" />
-          </div>
+          <DeleteOutlined
+            className="text-red-600 cursor-pointer"
+            onClick={() => handleDelete(record.id)}
+          />
+          <EditOutlined
+            className="text-blue-600 cursor-pointer"
+            onClick={() => handleEdit(record)}
+          />
+        </div>
         );
       },
     },
   ];
-  return <Table dataSource={users} columns={columns} />;
-
+  return (
+    <div>
+      <Table dataSource={users} columns={columns} loading={loading} />;
+      <Modal
+        title="Edit User"
+        visible={isEditModalVisible}
+        onCancel={() => setIsEditModalVisible(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setIsEditModalVisible(false)}>
+            Cancel
+          </Button>,
+          <Button key="save" type="primary" onClick={handleSave}>
+            Save
+          </Button>,
+        ]}
+      >
+        record
+        <Input
+          placeholder="Name"
+          value={editingUser?.name}
+          onChange={(e) =>
+            setEditingUser((prev) => ({ ...prev, name: e.target.value }))
+          }
+          className="mb-3"
+        />
+        <Input
+          placeholder="Email"
+          value={editingUser?.email}
+          onChange={(e) =>
+            setEditingUser((prev) => ({ ...prev, email: e.target.value }))
+          }
+          className="mb-3"
+        />
+        <Input
+          placeholder="Phone Number"
+          value={editingUser?.number}
+          onChange={(e) =>
+            setEditingUser((prev) => ({ ...prev, number: e.target.value }))
+          }
+        />
+      </Modal>
+    </div>
+  );
   return <div className="text-2xl"></div>;
 };
 
