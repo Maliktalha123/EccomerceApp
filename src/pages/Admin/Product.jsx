@@ -3,6 +3,7 @@ import { Button, Drawer } from "antd";
 import AddProductDrawer from '../../components/AddProductDrawer'
 import ProductsList from '../../components/ProductsList'
 function Products() {
+
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -14,8 +15,8 @@ function Products() {
 
   return (
     <div>
-      <div className="flex justify-between mb-5">
-        <h1>All Products</h1>
+      <div className="flex justify-around p-5">
+        <h1 className="text-2xl">All Products</h1>
         <Button type="primary" onClick={showDrawer}>
           Add Product
         </Button>

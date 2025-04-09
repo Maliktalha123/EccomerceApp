@@ -116,6 +116,7 @@ const Users = () => {
   ];
   return (
     <div>
+      <h1 className="text-2xl p-5">All Users</h1>
       <Table dataSource={users} columns={columns} loading={loading} />;
       <Modal
         title="Edit User"

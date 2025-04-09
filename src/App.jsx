@@ -44,7 +44,7 @@ function App() {
   const AdminLayout = () => {
     return (
       <div>
-        <h2>Admin Panel</h2>
+        
         <Outlet />
       </div>
     );

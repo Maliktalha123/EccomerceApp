@@ -28,13 +28,12 @@ function ProductsList() {
   };
 
   const handleEdit = (product) => {
-    console.log(product)
+    console.log(product);
     setEditingProduct(product);
     setIsEditModalVisible(true);
   };
 
   const handleSave = async () => {
-   
     try {
       const { id, title, desc, price } = editingProduct;
       const productRef = doc(db, "products", id);
@@ -50,7 +49,6 @@ function ProductsList() {
       message.error("Failed to update product: " + err.message);
     }
   };
-
 
   console.log("Products => ", products);
   const columns = [
@@ -116,7 +114,6 @@ function ProductsList() {
           </Button>,
         ]}
       >
-        record
         <Input
           placeholder="Title"
           value={editingProduct?.title}
@@ -134,7 +131,7 @@ function ProductsList() {
           className="mb-3"
         />
         <Input
-          placeholder="Phone Number"
+          placeholder="Price"
           value={editingProduct?.price}
           onChange={(e) =>
             setEditingProduct((prev) => ({ ...prev, price: e.target.value }))
