@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, message } from "antd";
 import { signInWithEmailAndPassword } from "firebase/auth/cordova";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../utils/firebase";
 
+
 const Signin = () => {
   const Navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const onFinish = (values) => {
-    console.log("Success:", values);
+    setLoading(true)
+    
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then((userCredential) => {
         const user = userCredential.user;
         message.success("Logged Inn successfully...")
+        
         Navigate("/");
+        setLoading(false)
       })
       .catch((error) => {
+        setLoading(false)
         const errorCode = error.code;
         const errorMessage = error.message;
         message.error(errorMessage)
@@ -25,7 +30,7 @@ const Signin = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const handleSignin = async () => {};
+  const handleSignin = async () => { };
 
   return (
     <div className="flex items-center content-center ">
@@ -97,12 +102,18 @@ const Signin = () => {
             alignItems: "start",
           }}
         >
+
           <Button
             type="primary"
             htmlType="submit"
-            style={{ width: "145px", height: "35px", marginTop: "5px" }}
+            loading={loading}
+            style={
+              
+              { width: "145px", height: "35px", marginTop: "5px" 
+              
+            }}
           >
-            Login
+            {loading ? "Signing In..." : "Login"}
           </Button>
         </Form.Item>
       </Form>

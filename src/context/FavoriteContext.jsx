@@ -30,6 +30,7 @@ function FavoriteContextProvider({ children }) {
 
     if (itemIndex == -1) {
       arr.push(item);
+      message.success("Item is added to favorites");
     } else {
       message.success("Item is already in your favorite list");
     }
@@ -41,6 +42,7 @@ function FavoriteContextProvider({ children }) {
     const itemIndex = favoriteItems.findIndex((data) => data.id == id);
     arr.splice(itemIndex, 1);
     setFavoriteItems([...arr]);
+     message.success("Item is removed from favorites");
   }
 
   function isItemAddedInFavorites(id) {

@@ -12,11 +12,9 @@ const Signup = () => {
   const [imageUpload, setImageUpload] = useState(null);
 
   const onFinish = async (values) => {
+    setLoading(true);
     const imagesRef = ref(storage, `prrofileimages/${imageUpload.name}`);
-
-    console.log("Success:", values);
     try {
-      setLoading(true);
 
       await uploadBytes(ref(storage, imagesRef), imageUpload).then(
         (snapshot) => {
@@ -154,9 +152,10 @@ const Signup = () => {
           <Button
             type="primary"
             htmlType="submit"
+            loading = {loading}
             style={{ width: "145px", height: "35px" }}
           >
-            Submit
+            {loading ? "Creating account..." : "Create Account"}
           </Button>
         </Form.Item>
       </Form>

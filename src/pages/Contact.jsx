@@ -10,7 +10,7 @@ import { Button, Form, Input, InputNumber } from "antd";
 const Contact = () => {
   return (
     <div className="flex flex-col lg:flex-row w-3/4 mt-16 m-auto gap-8">
-      <div className="flex flex-col mt-4 gap-5 borderTalha w-full lg:w-1/2">
+      <div className="flex flex-col mt-4 gap-5  w-full lg:w-1/2">
         <div className="flex gap-6">
           <PhoneFilled style={{ fontSize: "24px" }} />
           <div>
