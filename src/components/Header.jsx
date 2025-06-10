@@ -18,7 +18,7 @@ import { CartContext } from "../context/CartContext";
 
 const ResponsiveHeader = ({ user, cartItems, handleLogout, CompanyLogo }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+console.log("User => ",user)
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -95,7 +95,14 @@ const ResponsiveHeader = ({ user, cartItems, handleLogout, CompanyLogo }) => {
         </div>
       </header>
     );
-  } else {
+  } 
+  else if(user?.isLogin === false)
+  {
+   return null
+  }
+  
+  
+  else {
     return (
       <header className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-4">
