@@ -17,11 +17,11 @@ const { Title, Text, Link } = Typography
 export default function Signin() {
   const Navigate = useNavigate();
   const [form] = Form.useForm();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
-    setLoading(true)
     try {
+      setLoading(true)
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
           const user = userCredential.user;

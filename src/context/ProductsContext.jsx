@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, Spin } from "antd";
 import { collection, getDocs } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react";
 import { db } from "../utils/firebase";
@@ -47,7 +47,16 @@ function ProductContextProvider({ children }) {
         updateProduct
       }}
     >
-      {loading ? "Loading..." : children}
+     {loading ? (
+        <div
+          className="flex h-screen
+      justify-center items-center"
+        >
+          <Spin />
+        </div>
+      ) : (
+        children
+      )}
     </ProductContext.Provider>
   );
 }
