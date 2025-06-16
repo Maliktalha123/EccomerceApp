@@ -47,14 +47,12 @@ const ProductsComponent = () => {
               <Meta
                 title={data.title}
                 description={`${discription.slice(0, 50)}...see more`}
-                style={{
-                  width: 245,
-                }}
+                
               />
-
-              <div className="flex mt-4 gap-4 ">
-                <p className="text-2xl">{`$${data.price}`}</p>
-                <div className="flex gap-2">
+              
+              
+                <p className="text-2xl mt-2">{`$${data.price}`}</p>
+                <div className="flex gap-2 mt-1">
                   <Button
                     type="text"
                     icon={<HeartOutlined />}
@@ -68,7 +66,7 @@ const ProductsComponent = () => {
                       : `Add to Cart`}
                   </Button>
                 </div>
-              </div>
+              {/* </div> */}
             </Card>
           </Link>
         );
