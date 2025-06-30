@@ -20,6 +20,7 @@ import Users from "./pages/Admin/Users";
 import Products from "./pages/Admin/Product";
 import Soldout from "./pages/Admin/Soldout";
 import ContactRequest from "./pages/Admin/ContactRequest";
+import AddCategoryPage from "./pages/Admin/Categories";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -66,6 +67,7 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route path="categories" element={<AddCategoryPage/>}/>
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
           <Route path="purchases" element={<Soldout />} />
