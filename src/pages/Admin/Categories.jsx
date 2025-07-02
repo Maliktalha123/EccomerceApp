@@ -20,7 +20,7 @@ import {
   ReloadOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import AddCategoryDrawer from "../../components/AddCategory";
 
 // import { categoryService, type Category } from "@/services/categoryService"
 
@@ -30,11 +30,17 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     fetchCategories();
   }, []);
 
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   const fetchCategories = async (showRefreshLoader = false) => {
     try {
       if (showRefreshLoader) {
@@ -67,7 +73,7 @@ export default function CategoriesPage() {
   };
 
   const formatDate = (timestamp) => {
-    Link
+    Link;
     if (!timestamp) return "Unknown";
 
     try {
@@ -130,14 +136,19 @@ export default function CategoriesPage() {
                 >
                   Refresh
                 </Button>
-                <Link href="/add-category">
-                  <Button type="primary" icon={<PlusOutlined />} size="large">
-                    Add Category
-                  </Button>
-                </Link>
+
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={showDrawer}
+                  size="large"
+                >
+                  Add Category
+                </Button>
               </Space>
             </Col>
           </Row>
+          <AddCategoryDrawer onClose={onClose} open={open} />
 
           {/* Loading State */}
           {loading && (
@@ -167,11 +178,11 @@ export default function CategoriesPage() {
                       </Space>
                     }
                   >
-                    <Link href="/add-category">
-                      <Button type="primary" icon={<PlusOutlined />}>
+                    
+                      <Button type="primary" icon={<PlusOutlined />}  onClick={showDrawer}>
                         Add Your First Category
                       </Button>
-                    </Link>
+                    
                   </Empty>
                 </Card>
               ) : (

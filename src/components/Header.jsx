@@ -18,7 +18,7 @@ import { CartContext } from "../context/CartContext";
 
 const ResponsiveHeader = ({ user, cartItems, handleLogout, CompanyLogo }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-console.log("User => ",user)
+  console.log("User => ", user);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -49,20 +49,22 @@ console.log("User => ",user)
                 isMenuOpen ? "block" : "hidden"
               } lg:flex lg:items-center lg:w-auto w-full lg:mt-0 mt-4`}
             >
-              <div className="lg:flex-grow float-right">
-                {["Products", "Purchases", "Users", "Contact Requests"].map(
-                  (item) => (
-                    <Link
-                      key={item}
-                      to={
-                       `admin/${item.toLowerCase().replace(" ", "")}`
-                      }
-                      className="block mt-4 lg:inline-block lg:mt-0 text-gray-600 hover:text-gray-900 mr-4"
-                    >
-                      {item}
-                    </Link>
-                  )
-                )}
+              <div className="lg:flex-grow mx-auto float-right">
+                {[
+                  "Products",
+                  "Categories",
+                  "Purchases",
+                  "Users",
+                  "Contact Requests",
+                ].map((item) => (
+                  <Link
+                    key={item}
+                    to={`admin/${item.toLowerCase().replace(" ", "")}`}
+                    className="block mt-4 lg:inline-block lg:mt-0 text-gray-600 hover:text-gray-900 mr-4"
+                  >
+                    {item}
+                  </Link>
+                ))}
               </div>
             </nav>
 
@@ -95,30 +97,24 @@ console.log("User => ",user)
         </div>
       </header>
     );
-  } 
-  else if(user?.isLogin === false)
-  {
-   return null
-  }
-  
-  
-  else {
+  } else if (user?.isLogin === false) {
+    return null;
+  } else {
     return (
       <header className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-          
-          <div className={`${isMenuOpen ? "hidden" : "flex"} gap-6 mt-2`}>
-            <Link to="/" className="flex items-center ">
-              <img src={CompanyLogo} alt="Company Logo" className="h-10" />
-            </Link>
+            <div className={`${isMenuOpen ? "hidden" : "flex"} gap-6 mt-2`}>
+              <Link to="/" className="flex items-center ">
+                <img src={CompanyLogo} alt="Company Logo" className="h-10" />
+              </Link>
 
-            <button
-              onClick={toggleMenu}
-              className="lg:hidden text-gray-600 focus:outline-none"
-            >
-              <MenuOutlined className="text-2xl" />
-            </button>
+              <button
+                onClick={toggleMenu}
+                className="lg:hidden text-gray-600 focus:outline-none"
+              >
+                <MenuOutlined className="text-2xl" />
+              </button>
             </div>
             <nav
               className={`${
@@ -173,13 +169,12 @@ console.log("User => ",user)
 
           {isMenuOpen && (
             <div className="lg:hidden mt-2 flex flex-col  space-y-4">
-
-            <button
-            onClick={toggleMenu}
-            className="lg:hidden text-left text-gray-600 focus:outline-none"
-          >
-            <MenuOutlined className="text-2xl" />
-          </button>
+              <button
+                onClick={toggleMenu}
+                className="lg:hidden text-left text-gray-600 focus:outline-none"
+              >
+                <MenuOutlined className="text-2xl" />
+              </button>
               <Link to="/profile">
                 <ProfileOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
               </Link>
