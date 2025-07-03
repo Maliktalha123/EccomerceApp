@@ -23,16 +23,15 @@ const { Title, Text, Paragraph } = Typography;
 const CheckOut = () => {
   const { cartItems } = useContext(CartContext);
   const { user } = useContext(AuthContext);
-  
+  // console.log("CheckOut form => ", CheckOutValues);
   const Navigate = useNavigate();
   const uploadSale = () => {
     if (!CheckOutValues) message.error("Please Submit Your Information first!");
     if (CheckOutValues) {
-      const docRef = collection(db, "sales");
+      const docRef = collection(db, "sales", "orders");
 
       const saleData = {
         userInfo: CheckOutValues,
-        userId : user.uid,
         totalPrice,
         soldItems: cartItems,
         timestamp: new Date(),
@@ -52,15 +51,18 @@ const CheckOut = () => {
   return (
     <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
       <Row gutter={[24, 24]}>
+        {/* Checkout Form Section */}
         <Col xs={24} lg={14}>
           <Card title="Billing Details" bordered={false}>
             <CheckOutForm />
           </Card>
         </Col>
 
+        {/* Order Summary Section */}
         <Col xs={24} lg={10}>
           <Card title="Your Order" bordered={false}>
             <Space direction="vertical" style={{ width: "100%" }} size="large">
+              {/* Order Header */}
               <Row justify="space-between">
                 <Col>
                   <Title level={5} style={{ margin: 0 }}>
@@ -76,6 +78,7 @@ const CheckOut = () => {
 
               <Divider style={{ margin: "12px 0" }} />
 
+              {/* Cart Items */}
               <List
                 dataSource={cartItems}
                 renderItem={(item) => (
@@ -95,6 +98,7 @@ const CheckOut = () => {
 
               <Divider />
 
+              {/* Total */}
               <Row justify="space-between" align="middle">
                 <Col>
                   <Title level={4} style={{ margin: 0 }}>
@@ -116,6 +120,7 @@ const CheckOut = () => {
 
               <Divider />
 
+              {/* Payment Methods */}
               <Space
                 direction="vertical"
                 style={{ width: "100%" }}

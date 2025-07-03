@@ -67,7 +67,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="categories" element={<AddCategoryPage/>}/>
+          <Route path="categories" element={<AddCategoryPage/>}/> 
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
           <Route path="purchases" element={<Soldout />} />
