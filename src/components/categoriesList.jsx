@@ -1,95 +1,102 @@
-import { Button, Image, Input, Modal, Table, message } from "antd";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  updateDoc,
-} from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
+import { collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
+import { Button, Input, Modal, Table, message } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { CategoryContext } from "../context/CategoriesContext";
+import { useEffect, useState } from "react";
 
 function CategoriesList() {
-  const { Categories, setCategories } = useContext(CategoryContext);
+  const [categories, setCategories] = useState([]);
   const [editingCategory, setEditingCategory] = useState(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const categoriesCollection = collection(db, "categories");
+      const snapshot = await getDocs(categoriesCollection);
+      const categoriesList = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        key: doc.id, // Required by Ant Design Table
+      }));
+      setCategories(categoriesList);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching categories: ", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "categories", id));
-      setCategories(Categories.filter((category) => category.id !== id));
-      message.success("category deleted successfully.");
+      setCategories(categories.filter((category) => category.id !== id));
+      message.success("Category deleted successfully.");
     } catch (err) {
       message.error("Failed to delete category: " + err.message);
     }
   };
 
   const handleEdit = (category) => {
-    console.log(category);
     setEditingCategory(category);
     setIsEditModalVisible(true);
   };
 
   const handleSave = async () => {
     try {
-      const { id, title, desc } = editingCategory;
+      const { id, title, desc, price } = editingCategory;
       const categoryRef = doc(db, "categories", id);
-      await updateDoc(categoryRef, { title, desc });
+      await updateDoc(categoryRef, { title, desc});
+
       setCategories(
-        Categories.map((category) =>
+        categories.map((category) =>
           category.id === id ? { ...category, title, desc } : category
         )
       );
-      message.success("category updated successfully.");
+
+      message.success("Category updated successfully.");
       setIsEditModalVisible(false);
     } catch (err) {
       message.error("Failed to update category: " + err.message);
     }
   };
 
-  console.log("Categories => ", Categories);
   const columns = [
-    {
-      title: "Category",
-      dataIndex: "category",
-      key: "category",
-    },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
     },
     {
-      title: "Discription",
+      title: "Description",
       dataIndex: "desc",
       key: "desc",
     },
-
     {
       title: "Action",
       key: "action",
-      render: (record) => {
-        return (
-          <div className="flex gap-5">
-            <DeleteOutlined
-              className="text-red-600 cursor-pointer"
-              onClick={() => handleDelete(record.id)}
-            />
-            <EditOutlined
-              className="text-blue-600 cursor-pointer"
-              onClick={() => handleEdit(record)}
-            />
-          </div>
-        );
-      },
+      render: (record) => (
+        <div className="flex gap-5">
+          <DeleteOutlined
+            className="text-red-600 cursor-pointer"
+            onClick={() => handleDelete(record.id)}
+          />
+          <EditOutlined
+            className="text-blue-600 cursor-pointer"
+            onClick={() => handleEdit(record)}
+          />
+        </div>
+      ),
     },
   ];
+
   return (
     <div>
-      <Table dataSource={Categories} columns={columns} loading={loading} />;
+      <Table dataSource={categories} columns={columns} loading={loading} />
       <Modal
         title="Edit category"
         open={isEditModalVisible}
@@ -130,4 +137,5 @@ function CategoriesList() {
     </div>
   );
 }
+
 export default CategoriesList;
