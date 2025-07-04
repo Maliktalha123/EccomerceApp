@@ -48,7 +48,7 @@ function CategoriesList() {
 
   const handleSave = async () => {
     try {
-      const { id, title, desc, price } = editingCategory;
+      const { id, title, desc} = editingCategory;
       const categoryRef = doc(db, "categories", id);
       await updateDoc(categoryRef, { title, desc});
 

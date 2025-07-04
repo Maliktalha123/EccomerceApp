@@ -1,26 +1,37 @@
-import {
-  Drawer,
-  Button,
-  Checkbox,
-  Radio,
-  Form,
-  Input,
-  message,
-  Upload,
-} from "antd";
-("https://www.instagram.com/reel/DDe77p6ToHD/?utm_source=ig_web_copy_link");
-import { addDoc, collection } from "firebase/firestore";
-import { useState } from "react";
+import { Drawer, Button, Form, Input, message } from "antd";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { useForm } from "antd/es/form/Form";
 import { db, auth, storage } from "../utils/firebase";
 import { UploadOutlined } from "@ant-design/icons";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Select } from "antd";
+import { useContext, useEffect, useState } from "react";
+import { CategoryContext } from "../context/CategoriesContext";
 
 function AddProductDrawer({ open, onClose }) {
+  const { Option } = Select;
   const [imageUpload, setImageUpload] = useState(null);
+  const { categories } = useContext(CategoryContext);
 
   const [form] = useForm();
   const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const snapshot = await getDocs(collection(db, "categories"));
+  //       const cats = snapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         title: doc.data().title,
+  //       }));
+  //       setCategories(cats);
+  //     } catch (err) {
+  //       console.log("Error fetching categories:", err);
+  //     }
+  //   };
+
+  //   fetchCategories();
+  // }, []);
 
   const onFinish = async (values) => {
     const imagesRef = ref(storage, `images/${imageUpload.name}`);
@@ -73,11 +84,17 @@ function AddProductDrawer({ open, onClose }) {
           rules={[
             {
               required: true,
-              message: "Please input Category!",
+              message: "Please select category!",
             },
           ]}
         >
-          <Input />
+          <Select placeholder="Select a category">
+            {categories.map((cat) => (
+              <Option key={cat.id} value={cat.id}>
+                {cat.title}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item
