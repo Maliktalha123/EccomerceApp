@@ -1,230 +1,328 @@
-import React, { useState, useContext } from "react";
-import CompanyLogo from "../assets/logo.png";
-import { Link, useNavigate } from "react-router-dom";
-import "./Components.css";
+
+
+import { useState, useContext } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import {
   HeartOutlined,
-  ProfileOutlined,
+  UserOutlined,
   SearchOutlined,
   ShoppingCartOutlined,
   MenuOutlined,
-} from "@ant-design/icons";
-
-import { Badge, Button } from "antd";
-import { auth } from "../utils/firebase";
-import { signOut } from "firebase/auth";
-import { AuthContext } from "../context/AuthContext";
-import { CartContext } from "../context/CartContext";
-
-const ResponsiveHeader = ({ user, cartItems, handleLogout, CompanyLogo }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log("User => ", user);
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  // Conditional rendering based on email
-  if (user?.email === "talha@gmail.com") {
-    return (
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center">
-              <img
-                src={CompanyLogo}
-                alt="Company Logo"
-                className={`${isMenuOpen ? "hidden" : "block"} h-10 md:block`}
-              />
-            </Link>
-
-            <button
-              onClick={toggleMenu}
-              className="lg:hidden text-gray-600 focus:outline-none"
-            >
-              <MenuOutlined className="text-2xl" />
-            </button>
-
-            <nav
-              className={`${
-                isMenuOpen ? "block" : "hidden"
-              } lg:flex lg:items-center lg:w-auto w-full lg:mt-0 mt-4`}
-            >
-              <div className="lg:flex-grow mx-auto float-right">
-                {[
-                  "Products",
-                  "Categories",
-                  "Purchases",
-                  "Users",
-                  "Contact Requests",
-                ].map((item) => (
-                  <Link
-                    key={item}
-                    to={`admin/${item.toLowerCase().replace(" ", "")}`}
-                    className="block mt-4 lg:inline-block lg:mt-0 text-gray-600 hover:text-gray-900 mr-4"
-                  >
-                    {item}
-                  </Link>
-                ))}
-              </div>
-            </nav>
-
-            <div className="hidden lg:flex text-left space-x-4 ">
-              {user?.isLogin === false ? (
-                <Link to="/signin">
-                  <Button type="primary">Login</Button>
-                </Link>
-              ) : (
-                <Button onClick={handleLogout} type="primary">
-                  Logout
-                </Button>
-              )}
-            </div>
-          </div>
-
-          {isMenuOpen && (
-            <div className="lg:hidden mt-4 flex flex-col items-end space-y-4">
-              {user?.isLogin === false ? (
-                <Link to="/signin">
-                  <Button type="primary">Login</Button>
-                </Link>
-              ) : (
-                <Button onClick={handleLogout} type="primary">
-                  Logout
-                </Button>
-              )}
-            </div>
-          )}
-        </div>
-      </header>
-    );
-  } else if (user?.isLogin === false) {
-    return null;
-  } else {
-    return (
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className={`${isMenuOpen ? "hidden" : "flex"} gap-6 mt-2`}>
-              <Link to="/" className="flex items-center ">
-                <img src={CompanyLogo} alt="Company Logo" className="h-10" />
-              </Link>
-
-              <button
-                onClick={toggleMenu}
-                className="lg:hidden text-gray-600 focus:outline-none"
-              >
-                <MenuOutlined className="text-2xl" />
-              </button>
-            </div>
-            <nav
-              className={`${
-                isMenuOpen ? "block" : "hidden"
-              } lg:flex lg:items-center lg:w-auto w-full lg:mt-0 mt-4`}
-            >
-              <div className="lg:flex-grow">
-                {["Home", "Shop", "About", "Contact", "My Orders"].map(
-                  (item) => (
-                    <Link
-                      key={item}
-                      to={
-                        item === "Home"
-                          ? "/"
-                          : `/${item.toLowerCase().replace(" ", "")}`
-                      }
-                      className="block mt-4 lg:inline-block lg:mt-0 text-gray-600 hover:text-gray-900 mr-4"
-                    >
-                      {item}
-                    </Link>
-                  )
-                )}
-              </div>
-            </nav>
-
-            <div className="hidden lg:flex items-center space-x-4">
-              <Link to="/profile">
-                <ProfileOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
-              </Link>
-              <Link to="/search">
-                <SearchOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
-              </Link>
-              <Link to="/favorite">
-                <HeartOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
-              </Link>
-              <Link to="/cart">
-                <Badge count={cartItems.length}>
-                  <ShoppingCartOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
-                </Badge>
-              </Link>
-              {user?.isLogin === false ? (
-                <Link to="/signin">
-                  <Button type="primary">Login</Button>
-                </Link>
-              ) : (
-                <Button onClick={handleLogout} type="primary">
-                  Logout
-                </Button>
-              )}
-            </div>
-          </div>
-
-          {isMenuOpen && (
-            <div className="lg:hidden mt-2 flex flex-col  space-y-4">
-              <button
-                onClick={toggleMenu}
-                className="lg:hidden text-left text-gray-600 focus:outline-none"
-              >
-                <MenuOutlined className="text-2xl" />
-              </button>
-              <Link to="/profile">
-                <ProfileOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
-              </Link>
-              <Link to="/search">
-                <SearchOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
-              </Link>
-              <Link to="/favorite">
-                <HeartOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
-              </Link>
-              <Link to="/cart">
-                <Badge count={cartItems.length}>
-                  <ShoppingCartOutlined className="text-2xl text-gray-600 hover:text-gray-900" />
-                </Badge>
-              </Link>
-              {user?.isLogin === false ? (
-                <Link to="/signin">
-                  <Button type="primary">Login</Button>
-                </Link>
-              ) : (
-                <Button onClick={handleLogout} type="primary">
-                  Logout
-                </Button>
-              )}
-            </div>
-          )}
-        </div>
-      </header>
-    );
-  }
-};
+  LogoutOutlined,
+  LoginOutlined,
+  HomeOutlined,
+  ShopOutlined,
+  InfoCircleOutlined,
+  ContactsOutlined,
+  FileTextOutlined,
+  AppstoreOutlined,
+  TeamOutlined,
+  ShoppingOutlined,
+} from "@ant-design/icons"
+import { Badge, Button, Drawer, Divider, Avatar, Dropdown } from "antd"
+import { auth } from "../utils/firebase"
+import { signOut } from "firebase/auth"
+import { AuthContext } from "../context/AuthContext"
+import { CartContext } from "../context/CartContext"
 
 const Header = () => {
-  const Navigate = useNavigate();
-  const { user } = useContext(AuthContext);
-  const { cartItems } = useContext(CartContext);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const navigate = useNavigate()
+  const { user } = useContext(AuthContext)
+  const { cartItems } = useContext(CartContext)
 
   const handleLogout = () => {
     signOut(auth)
-      .then(() => Navigate("/signin"))
-      .catch((err) => console.log("Error in signOut => ", err));
-  };
+      .then(() => {
+        navigate("/signin")
+        setMobileMenuOpen(false)
+      })
+      .catch((err) => console.log("Error in signOut => ", err))
+  }
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
+
+  // Admin navigation items
+  const adminNavItems = [
+    { key: "products", label: "Products", icon: <ShoppingOutlined />, path: "/admin/products" },
+    { key: "categories", label: "Categories", icon: <AppstoreOutlined />, path: "/admin/categories" },
+    { key: "purchases", label: "Purchases", icon: <FileTextOutlined />, path: "/admin/purchases" },
+    { key: "users", label: "Users", icon: <TeamOutlined />, path: "/admin/users" },
+    { key: "contact", label: "Contact Requests", icon: <ContactsOutlined />, path: "/admin/contactrequests" },
+  ]
+
+  // Customer navigation items
+  const customerNavItems = [
+    { key: "home", label: "Home", icon: <HomeOutlined />, path: "/" },
+    { key: "shop", label: "Shop", icon: <ShopOutlined />, path: "/shop" },
+    { key: "about", label: "About", icon: <InfoCircleOutlined />, path: "/about" },
+    { key: "contact", label: "Contact", icon: <ContactsOutlined />, path: "/contact" },
+    { key: "orders", label: "My Orders", icon: <FileTextOutlined />, path: "/myorders" },
+  ]
+
+  // User dropdown menu
+  const userMenuItems = [
+    {
+      key: "profile",
+      label: "Profile",
+      icon: <UserOutlined />,
+      onClick: () => navigate("/profile"),
+    },
+    {
+      key: "orders",
+      label: "My Orders",
+      icon: <FileTextOutlined />,
+      onClick: () => navigate("/myorders"),
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "logout",
+      label: "Logout",
+      icon: <LogoutOutlined />,
+      onClick: handleLogout,
+    },
+  ]
+
+  // Don't render header if user is not logged in (except for admin)
+  if (user?.isLogin === false && user?.email !== "talha@gmail.com") {
+    return null
+  }
+
+  const isAdmin = user?.email === "talha@gmail.com"
+  const navItems = isAdmin ? adminNavItems : customerNavItems
 
   return (
-    <ResponsiveHeader
-      user={user}
-      cartItems={cartItems}
-      handleLogout={handleLogout}
-      CompanyLogo={CompanyLogo}
-    />
-  );
-};
+    <>
+      <header className="sticky top-0 z-50 bg-white shadow-lg border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <Link to="/" className="flex items-center space-x-2">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">L</span>
+                </div>
+                <span className="hidden sm:block text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  {isAdmin ? "Admin Panel" : "Your Store"}
+                </span>
+              </Link>
+            </div>
 
-export default Header;
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.key}
+                  to={item.path}
+                  className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </nav>
+
+            {/* Desktop Actions */}
+            <div className="hidden lg:flex items-center space-x-4">
+              {!isAdmin && (
+                <>
+                  <Button
+                    type="text"
+                    icon={<SearchOutlined />}
+                    size="large"
+                    className="text-gray-600 hover:text-blue-600"
+                    onClick={() => navigate("/search")}
+                  />
+                  <Button
+                    type="text"
+                    icon={<HeartOutlined />}
+                    size="large"
+                    className="text-gray-600 hover:text-blue-600"
+                    onClick={() => navigate("/favorite")}
+                  />
+                  <Badge count={cartItems?.length || 0} size="small">
+                    <Button
+                      type="text"
+                      icon={<ShoppingCartOutlined />}
+                      size="large"
+                      className="text-gray-600 hover:text-blue-600"
+                      onClick={() => navigate("/cart")}
+                    />
+                  </Badge>
+                </>
+              )}
+
+              {user?.isLogin === false ? (
+                <Button
+                  type="primary"
+                  icon={<LoginOutlined />}
+                  onClick={() => navigate("/signin")}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 border-none"
+                >
+                  Login
+                </Button>
+              ) : (
+                <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" trigger={["click"]}>
+                  <Button type="text" className="flex items-center space-x-2 p-2">
+                    <Avatar
+                      size="small"
+                      icon={<UserOutlined />}
+                      className="bg-gradient-to-r from-blue-600 to-purple-600"
+                    />
+                    <span className="text-gray-700 font-medium">{isAdmin ? "Admin" : "Account"}</span>
+                  </Button>
+                </Dropdown>
+              )}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <Button
+              type="text"
+              icon={<MenuOutlined />}
+              size="large"
+              className="lg:hidden text-gray-600"
+              onClick={toggleMobileMenu}
+            />
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        title={
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">L</span>
+            </div>
+            <span className="text-lg font-bold">{isAdmin ? "Admin Panel" : "Your Store"}</span>
+          </div>
+        }
+        placement="right"
+        onClose={() => setMobileMenuOpen(false)}
+        open={mobileMenuOpen}
+        width={300}
+        className="lg:hidden"
+      >
+        <div className="flex flex-col space-y-4">
+          {/* Navigation Links */}
+          <div className="space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.key}
+                to={item.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 text-gray-700 hover:text-blue-600 transition-colors duration-200"
+              >
+                {item.icon}
+                <span className="font-medium">{item.label}</span>
+              </Link>
+            ))}
+          </div>
+
+          {!isAdmin && (
+            <>
+              <Divider />
+              {/* Action Buttons */}
+              <div className="space-y-2">
+                <Button
+                  type="text"
+                  icon={<SearchOutlined />}
+                  size="large"
+                  block
+                  className="flex items-center justify-start space-x-2 text-gray-700"
+                  onClick={() => {
+                    navigate("/search")
+                    setMobileMenuOpen(false)
+                  }}
+                >
+                  <span>Search</span>
+                </Button>
+                <Button
+                  type="text"
+                  icon={<HeartOutlined />}
+                  size="large"
+                  block
+                  className="flex items-center justify-start space-x-2 text-gray-700"
+                  onClick={() => {
+                    navigate("/favorite")
+                    setMobileMenuOpen(false)
+                  }}
+                >
+                  <span>Favorites</span>
+                </Button>
+                <Button
+                  type="text"
+                  size="large"
+                  block
+                  className="flex items-center justify-start space-x-2 text-gray-700"
+                  onClick={() => {
+                    navigate("/cart")
+                    setMobileMenuOpen(false)
+                  }}
+                >
+                  <Badge count={cartItems?.length || 0} size="small">
+                    <ShoppingCartOutlined />
+                  </Badge>
+                  <span className="ml-2">Cart</span>
+                </Button>
+              </div>
+            </>
+          )}
+
+          <Divider />
+
+          {/* User Actions */}
+          <div className="space-y-2">
+            {user?.isLogin === false ? (
+              <Button
+                type="primary"
+                icon={<LoginOutlined />}
+                size="large"
+                block
+                onClick={() => {
+                  navigate("/signin")
+                  setMobileMenuOpen(false)
+                }}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 border-none"
+              >
+                Login
+              </Button>
+            ) : (
+              <>
+                <Button
+                  type="text"
+                  icon={<UserOutlined />}
+                  size="large"
+                  block
+                  className="flex items-center justify-start space-x-2 text-gray-700"
+                  onClick={() => {
+                    navigate("/profile")
+                    setMobileMenuOpen(false)
+                  }}
+                >
+                  <span>Profile</span>
+                </Button>
+                <Button
+                  type="text"
+                  icon={<LogoutOutlined />}
+                  size="large"
+                  block
+                  className="flex items-center justify-start space-x-2 text-red-600"
+                  onClick={handleLogout}
+                >
+                  <span>Logout</span>
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
+      </Drawer>
+    </>
+  )
+}
+
+export default Header
