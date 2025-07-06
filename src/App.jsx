@@ -28,6 +28,7 @@ import Soldout from "./pages/Admin/Soldout";
 import ContactRequest from "./pages/Admin/ContactRequest";
 import AddCategoryPage from "./pages/Admin/Categories";
 import ProductByCategory from "./pages/ProductByCategory";
+import Categories from "./pages/categories";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -88,6 +89,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/categories" element={<Categories />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/checkout" element={<CheckOut />} />
