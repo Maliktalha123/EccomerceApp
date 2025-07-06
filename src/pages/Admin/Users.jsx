@@ -79,15 +79,8 @@ const Users = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
-    },
-    {
-      title: "Image",
-      dataIndex: "url",
-      key: "url",
-      render: (data) => (
-        <Avatar size="large" src={data} icon={<UserOutlined />} />
-      ),
-    },
+   x },
+   
 
     {
       title: "Ph : Number",

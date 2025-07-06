@@ -36,6 +36,47 @@ const CategoriesContextProvider = ({ children }) => {
     }
   };
 
+
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "categories", id));
+      setCategories(categories.filter((category) => category.id !== id));
+      message.success("Category deleted successfully.");
+    } catch (err) {
+      message.error("Failed to delete category: " + err.message);
+    }
+  };
+
+
+
+  const handleEdit = (category) => {
+    setEditingCategory(category);
+    setIsEditModalVisible(true);
+  };
+
+
+
+    const handleSave = async () => {
+      try {
+        const { id, title, desc} = editingCategory;
+        const categoryRef = doc(db, "categories", id);
+        await updateDoc(categoryRef, { title, desc});
+  
+        setCategories(
+          categories.map((category) =>
+            category.id === id ? { ...category, title, desc } : category
+          )
+        );
+  
+        message.success("Category updated successfully.");
+        setIsEditModalVisible(false);
+      } catch (err) {
+        message.error("Failed to update category: " + err.message);
+      }
+    };
+
+
   return (
     <CategoryContext.Provider value={{ categories }}>
       {loading ? (

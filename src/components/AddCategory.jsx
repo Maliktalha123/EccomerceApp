@@ -1,7 +1,7 @@
 import { Drawer, Button, Form, Input, message } from "antd";
 import { useState } from "react";
 import { useForm } from "antd/es/form/Form";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
 
 function AddCategoryDrawer({ open, onClose }) {
@@ -21,7 +21,7 @@ function AddCategoryDrawer({ open, onClose }) {
         createdAt: new Date(),
       };
 
-await setDoc(newDocRef, categoryData);
+      await setDoc(newDocRef, categoryData);
 
       form.resetFields();
       setLoading(false);

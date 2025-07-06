@@ -1,5 +1,11 @@
 import { useContext } from "react";
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import Header from "./components/Header";
 import Signin from "./pages/Auth/Signin";
@@ -21,11 +27,10 @@ import Products from "./pages/Admin/Product";
 import Soldout from "./pages/Admin/Soldout";
 import ContactRequest from "./pages/Admin/ContactRequest";
 import AddCategoryPage from "./pages/Admin/Categories";
+import ProductByCategory from "./pages/ProductByCategory";
 
 function App() {
   const { user } = useContext(AuthContext);
-
-  // Admin email
   const adminEmail = "talha@gmail.com";
 
   const getInitialRoute = () => {
@@ -45,7 +50,6 @@ function App() {
   const AdminLayout = () => {
     return (
       <div>
-        
         <Outlet />
       </div>
     );
@@ -62,23 +66,25 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute condition={user?.isLogin && user?.email === adminEmail}>
+            <ProtectedRoute
+              condition={user?.isLogin && user?.email === adminEmail}
+            >
               <AdminLayout />
             </ProtectedRoute>
           }
         >
-          <Route path="categories" element={<AddCategoryPage/>}/> 
+          <Route path="categories" element={<AddCategoryPage />} />
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
           <Route path="purchases" element={<Soldout />} />
           <Route path="contactrequests" element={<ContactRequest />} />
         </Route>
 
-        {/* User Routes */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/category/:id" element={<ProductByCategory />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />

@@ -18,7 +18,7 @@ function ProductContextProvider({ children }) {
       setLoading(true);
       const ref = collection(db, "products");
       const productData = await getDocs(ref);
-      console.log("I am here.....",productData)
+
       if (!productData.empty) {
         const allProducts = [];
         productData.forEach((product) => {
@@ -44,10 +44,10 @@ function ProductContextProvider({ children }) {
       value={{
         products,
         setProducts,
-        updateProduct
+        updateProduct,
       }}
     >
-     {loading ? (
+      {loading ? (
         <div
           className="flex h-screen
       justify-center items-center"

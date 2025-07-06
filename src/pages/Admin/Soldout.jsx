@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from "react"
-import { Image, message, Card, Spin, Typography, Divider } from "antd"
-import { collection, getDocs } from "firebase/firestore"
-import { db } from "../../utils/firebase"
+import React, { useEffect, useState } from "react";
+import { Image, message, Card, Spin, Typography, Divider } from "antd";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 
-const { Title, Text } = Typography
+const { Title, Text } = Typography;
 
 const Soldout = () => {
-  const [loading, setLoading] = useState(false)
-  const [sales, setSales] = useState([])
+  const [loading, setLoading] = useState(false);
+  const [sales, setSales] = useState([]);
 
   useEffect(() => {
-    getSoldOutsFromDB()
-  }, [])
+    getSoldOutsFromDB();
+  }, []);
 
   const getSoldOutsFromDB = async () => {
     try {
-      setLoading(true)
-      const ref = collection(db, "sales")
-      const salesData = await getDocs(ref)
+      setLoading(true);
+      const ref = collection(db, "sales");
+      const salesData = await getDocs(ref);
       if (!salesData.empty) {
         const allSales = salesData.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
-        }))
-        setSales(allSales)
+        }));
+        setSales(allSales);
       }
     } catch (err) {
-      message.error(err.message)
+      message.error(err.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Spin size="large" />
       </div>
-    )
+    );
   }
 
   return (
@@ -78,15 +78,16 @@ const Soldout = () => {
               <Divider />
               <div className="flex justify-between items-center">
                 <Text strong>Total Price:</Text>
-                <Text className="text-lg font-semibold text-blue-600">${data.totalPrice}</Text>
+                <Text className="text-lg font-semibold text-blue-600">
+                  ${data.totalPrice}
+                </Text>
               </div>
             </div>
           </Card>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Soldout
-
+export default Soldout;
