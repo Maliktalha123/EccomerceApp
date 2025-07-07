@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import Footer from "../components/Footer";
 import { AuthContext } from "../context/AuthContext";
 import { ProductContext } from "../context/ProductsContext";
-import ProductsComponent from "../components/ProductsComponent";
+
 import { Link } from "react-router-dom";
+import Shop from "./ProductByCategory";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -16,7 +17,7 @@ const Home = () => {
       <div className="text-center">
         <h1 className="text-3xl">Our Products</h1>
         <br />
-        <ProductsComponent />
+        <Shop />
         <button
           style={{ border: "1px solid #B88E2F", text: "#B88E2F" }}
           className="w-36 h-10 mt-2 text-xl"
