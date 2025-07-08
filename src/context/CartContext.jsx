@@ -9,36 +9,31 @@ function CartContextProvider({ children }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    const itemsFromStorage = localStorage.getItem("cartItems");
+    if (itemsFromStorage) {
+      setCartItems(JSON.parse(itemsFromStorage));
+    }
+    setIsLoaded(true);
+  }, []);
+  useEffect(() => {
     if (isLoaded) {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
   }, [cartItems]);
 
-  useEffect(() => {
-    const itemsFromStorage = localStorage.getItem("cartItems");
-
-    if (itemsFromStorage) {
-      setCartItems([...JSON.parse(itemsFromStorage)]);
-      setIsLoaded(true);
-    }
-  }, []);
-
   function addItemToCart(item) {
     const arr = cartItems;
-    //item add nahn he , to add krdo
-    //agr item add he , to uski quantity barhado
-    //check if item exist
     const itemIndex = cartItems.findIndex((data) => data.id == item.id);
-    if (itemIndex == -1) {
-      // item array mein nahn he
+
+    if (itemIndex === -1) {
       arr.push({ ...item, quantity: 1 });
-       message.success("Item added to cart.");
+      message.success("Item added to cart.");
     } else {
       arr[itemIndex].quantity++;
     }
+
     setCartItems([...arr]);
   }
-
   function lessQuanityFromCart(id) {
     const arr = cartItems;
     const itemIndex = cartItems.findIndex((data) => data.id == id);
@@ -51,7 +46,7 @@ function CartContextProvider({ children }) {
     const itemIndex = cartItems.findIndex((data) => data.id == id);
     arr.splice(itemIndex, 1);
     setCartItems([...arr]);
-     message.success("Item removed from cart.");
+    message.success("Item removed from cart.");
   }
 
   function isItemAdded(id) {
@@ -64,10 +59,17 @@ function CartContextProvider({ children }) {
     }
   }
 
+  function clearCart() {
+    setCartItems([]);
+    localStorage.removeItem("cartItems");
+    message.success("Cart cleared successfully!");
+  }
+
   return (
     <CartContext.Provider
       value={{
         cartItems,
+        clearCart,
         addItemToCart,
         lessQuanityFromCart,
         removeItemFromCart,

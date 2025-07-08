@@ -8,23 +8,20 @@ function FavoriteContextProvider({ children }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    const itemsFromStorage = localStorage.getItem("favoriteItems");
+    if (itemsFromStorage) {
+      setFavoriteItems(JSON.parse(itemsFromStorage));
+    }
+    setIsLoaded(true); // <- set true regardless
+  }, []);
+
+  useEffect(() => {
     if (isLoaded) {
       localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
     }
-  }, [addItemToFavorite, removeItemFromFavorite, isItemAddedInFavorites]);
+  }, [favoriteItems]);
 
-  useEffect(() => {
-    const itemsFromStorage = localStorage.getItem("favoriteItems");
-    if (itemsFromStorage) {
-      setFavoriteItems([...JSON.parse(itemsFromStorage)]);
-      setIsLoaded(true);
-    }
-  }, []);
-
-  // Functions
-  console.log("Favorite Items", favoriteItems);
   function addItemToFavorite(item) {
-    // console.log("Item from Favorite department",item.id)
     const arr = favoriteItems;
     const itemIndex = favoriteItems.findIndex((data) => data.id == item.id);
 
@@ -42,7 +39,7 @@ function FavoriteContextProvider({ children }) {
     const itemIndex = favoriteItems.findIndex((data) => data.id == id);
     arr.splice(itemIndex, 1);
     setFavoriteItems([...arr]);
-     message.success("Item is removed from favorites");
+    message.success("Item is removed from favorites");
   }
 
   function isItemAddedInFavorites(id) {

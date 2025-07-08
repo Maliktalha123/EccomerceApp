@@ -179,7 +179,7 @@ export default function Signup() {
               <Text type="secondary">
                 Already have an account?{" "}
                 <a
-                  href="/login"
+                  href="/signin"
                   className="text-blue-600 hover:text-blue-500 font-medium"
                 >
                   Sign in here
