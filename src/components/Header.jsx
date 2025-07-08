@@ -1,7 +1,5 @@
-"use client"
-
-import { useState, useContext } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HeartOutlined,
   UserOutlined,
@@ -18,49 +16,88 @@ import {
   AppstoreOutlined,
   TeamOutlined,
   ShoppingOutlined,
-} from "@ant-design/icons"
-import { Badge, Button, Drawer, Divider, Avatar, Dropdown } from "antd"
-import { auth } from "../utils/firebase"
-import { signOut } from "firebase/auth"
-import { AuthContext } from "../context/AuthContext"
-import { CartContext } from "../context/CartContext"
+} from "@ant-design/icons";
+import { Badge, Button, Drawer, Divider, Avatar, Dropdown } from "antd";
+import { auth } from "../utils/firebase";
+import { signOut } from "firebase/auth";
+import { AuthContext } from "../context/AuthContext";
+import { CartContext } from "../context/CartContext";
 
 const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const navigate = useNavigate()
-  const { user } = useContext(AuthContext)
-  const { cartItems } = useContext(CartContext)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const { cartItems } = useContext(CartContext);
 
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        navigate("/signin")
-        setMobileMenuOpen(false)
+        navigate("/signin");
+        setMobileMenuOpen(false);
       })
-      .catch((err) => console.log("Error in signOut => ", err))
-  }
+      .catch((err) => console.log("Error in signOut => ", err));
+  };
 
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen)
-  }
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   // Admin navigation items
   const adminNavItems = [
-    { key: "products", label: "Products", icon: <ShoppingOutlined />, path: "/admin/products" },
-    { key: "categories", label: "Categories", icon: <AppstoreOutlined />, path: "/admin/categories" },
-    { key: "purchases", label: "Purchases", icon: <FileTextOutlined />, path: "/admin/purchases" },
-    { key: "users", label: "Users", icon: <TeamOutlined />, path: "/admin/users" },
-    { key: "contact", label: "Contact", icon: <ContactsOutlined />, path: "/admin/contactrequests" },
-  ]
+    {
+      key: "products",
+      label: "Products",
+      icon: <ShoppingOutlined />,
+      path: "/admin/products",
+    },
+    {
+      key: "categories",
+      label: "Categories",
+      icon: <AppstoreOutlined />,
+      path: "/admin/categories",
+    },
+    {
+      key: "purchases",
+      label: "Purchases",
+      icon: <FileTextOutlined />,
+      path: "/admin/purchases",
+    },
+    {
+      key: "users",
+      label: "Users",
+      icon: <TeamOutlined />,
+      path: "/admin/users",
+    },
+    {
+      key: "contact",
+      label: "Contact",
+      icon: <ContactsOutlined />,
+      path: "/admin/contactrequests",
+    },
+  ];
 
-  // Customer navigation items
   const customerNavItems = [
     { key: "home", label: "Home", icon: <HomeOutlined />, path: "/" },
     { key: "shop", label: "Shop", icon: <ShopOutlined />, path: "/shop" },
-    { key: "about", label: "About", icon: <InfoCircleOutlined />, path: "/about" },
-    { key: "contact", label: "Contact", icon: <ContactsOutlined />, path: "/contact" },
-    { key: "orders", label: "Orders", icon: <FileTextOutlined />, path: "/myorders" },
-  ]
+    {
+      key: "about",
+      label: "About",
+      icon: <InfoCircleOutlined />,
+      path: "/about",
+    },
+    {
+      key: "contact",
+      label: "Contact",
+      icon: <ContactsOutlined />,
+      path: "/contact",
+    },
+    {
+      key: "orders",
+      label: "Orders",
+      icon: <FileTextOutlined />,
+      path: "/my-orders",
+    },
+  ];
 
   // User dropdown menu
   const userMenuItems = [
@@ -74,7 +111,7 @@ const Header = () => {
       key: "orders",
       label: "My Orders",
       icon: <FileTextOutlined />,
-      onClick: () => navigate("/myorders"),
+      onClick: () => navigate("/my-orders"),
     },
     {
       type: "divider",
@@ -85,26 +122,26 @@ const Header = () => {
       icon: <LogoutOutlined />,
       onClick: handleLogout,
     },
-  ]
+  ];
 
   // Don't render header if user is not logged in (except for admin)
   if (user?.isLogin === false && user?.email !== "talha@gmail.com") {
-    return null
+    return null;
   }
 
-  const isAdmin = user?.email === "talha@gmail.com"
-  const navItems = isAdmin ? adminNavItems : customerNavItems
+  const isAdmin = user?.email === "talha@gmail.com";
+  const navItems = isAdmin ? adminNavItems : customerNavItems;
 
   // Get responsive drawer width
   const getDrawerWidth = () => {
     if (typeof window !== "undefined") {
-      const screenWidth = window.innerWidth
-      if (screenWidth <= 320) return Math.min(screenWidth - 20, 280) // Very small screens
-      if (screenWidth <= 480) return Math.min(screenWidth - 40, 300) // Small screens
-      return 320 // Default width
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 320) return Math.min(screenWidth - 20, 280); // Very small screens
+      if (screenWidth <= 480) return Math.min(screenWidth - 40, 300); // Small screens
+      return 320; // Default width
     }
-    return 300
-  }
+    return 300;
+  };
 
   return (
     <>
@@ -115,7 +152,9 @@ const Header = () => {
             <div className="flex items-center min-w-0 flex-shrink-0">
               <Link to="/" className="flex items-center space-x-1 sm:space-x-2">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-bold text-sm sm:text-lg">L</span>
+                  <span className="text-white font-bold text-sm sm:text-lg">
+                    L
+                  </span>
                 </div>
                 <span className="hidden xs:block sm:block text-sm sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent truncate max-w-[120px] sm:max-w-none">
                   {isAdmin ? "Admin" : "Store"}
@@ -178,8 +217,15 @@ const Header = () => {
                   <span className="hidden sm:inline">Login</span>
                 </Button>
               ) : (
-                <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" trigger={["click"]}>
-                  <Button type="text" className="flex items-center space-x-1 sm:space-x-2 p-1 sm:p-2">
+                <Dropdown
+                  menu={{ items: userMenuItems }}
+                  placement="bottomRight"
+                  trigger={["click"]}
+                >
+                  <Button
+                    type="text"
+                    className="flex items-center space-x-1 sm:space-x-2 p-1 sm:p-2"
+                  >
                     <Avatar
                       size="small"
                       icon={<UserOutlined />}
@@ -196,7 +242,11 @@ const Header = () => {
             {/* Mobile Actions - Compact for very small screens */}
             <div className="flex md:hidden items-center space-x-1">
               {!isAdmin && (
-                <Badge count={cartItems?.length || 0} size="small" offset={[-2, 2]}>
+                <Badge
+                  count={cartItems?.length || 0}
+                  size="small"
+                  offset={[-2, 2]}
+                >
                   <Button
                     type="text"
                     icon={<ShoppingCartOutlined />}
@@ -238,7 +288,9 @@ const Header = () => {
             <div className="w-7 h-7 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
               <span className="text-white font-bold text-sm">L</span>
             </div>
-            <span className="text-base font-bold truncate">{isAdmin ? "Admin Panel" : "Your Store"}</span>
+            <span className="text-base font-bold truncate">
+              {isAdmin ? "Admin Panel" : "Your Store"}
+            </span>
           </div>
         }
         placement="right"
@@ -279,8 +331,8 @@ const Header = () => {
                   block
                   className="flex items-center justify-start space-x-2 text-gray-700 h-10 text-sm"
                   onClick={() => {
-                    navigate("/search")
-                    setMobileMenuOpen(false)
+                    navigate("/search");
+                    setMobileMenuOpen(false);
                   }}
                 >
                   <span>Search</span>
@@ -292,8 +344,8 @@ const Header = () => {
                   block
                   className="flex items-center justify-start space-x-2 text-gray-700 h-10 text-sm"
                   onClick={() => {
-                    navigate("/favorite")
-                    setMobileMenuOpen(false)
+                    navigate("/favorite");
+                    setMobileMenuOpen(false);
                   }}
                 >
                   <span>Favorites</span>
@@ -304,8 +356,8 @@ const Header = () => {
                   block
                   className="flex items-center justify-start space-x-2 text-gray-700 h-10 text-sm"
                   onClick={() => {
-                    navigate("/cart")
-                    setMobileMenuOpen(false)
+                    navigate("/cart");
+                    setMobileMenuOpen(false);
                   }}
                 >
                   <div className="flex items-center space-x-2">
@@ -330,8 +382,8 @@ const Header = () => {
                 size="middle"
                 block
                 onClick={() => {
-                  navigate("/signin")
-                  setMobileMenuOpen(false)
+                  navigate("/signin");
+                  setMobileMenuOpen(false);
                 }}
                 className="bg-gradient-to-r from-blue-600 to-purple-600 border-none h-10"
               >
@@ -346,8 +398,8 @@ const Header = () => {
                   block
                   className="flex items-center justify-start space-x-2 text-gray-700 h-10 text-sm"
                   onClick={() => {
-                    navigate("/profile")
-                    setMobileMenuOpen(false)
+                    navigate("/profile");
+                    setMobileMenuOpen(false);
                   }}
                 >
                   <span>Profile</span>
@@ -383,7 +435,7 @@ const Header = () => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

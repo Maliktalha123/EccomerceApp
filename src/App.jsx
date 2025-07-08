@@ -93,7 +93,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/checkout" element={<CheckOut />} />
-        <Route path="/myorders" element={<MyOrders />} />
+        <Route path="/my-orders" element={<MyOrders />} />
       </Routes>
     </BrowserRouter>
   );
