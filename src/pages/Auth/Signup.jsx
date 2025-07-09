@@ -9,7 +9,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db, storage } from "../../utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const { Title, Text } = Typography;
@@ -178,12 +178,12 @@ export default function Signup() {
             <div className="text-center mt-6">
               <Text type="secondary">
                 Already have an account?{" "}
-                <a
-                  href="/signin"
+                <Link
+                  to="/signin"
                   className="text-blue-600 hover:text-blue-500 font-medium"
                 >
                   Sign in here
-                </a>
+                </Link>
               </Text>
             </div>
           </Card>

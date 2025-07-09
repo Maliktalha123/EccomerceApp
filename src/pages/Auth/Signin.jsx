@@ -1,16 +1,5 @@
-import { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Card,
-  Checkbox,
-  Typography,
-  Space,
-  Divider,
-  message,
-  Spin,
-} from "antd";
+import { useState } from "react"
+import { Form, Input, Button, Card, Checkbox, Typography, Space, Divider, message, Spin } from "antd"
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
@@ -18,12 +7,12 @@ import {
   LockOutlined,
   ArrowRightOutlined,
   LoadingOutlined,
-} from "@ant-design/icons";
-import { auth } from "../../utils/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth/cordova";
-import { useNavigate } from "react-router-dom";
+} from "@ant-design/icons"
+import { auth } from "../../utils/firebase"
+import { signInWithEmailAndPassword } from "firebase/auth/cordova"
+import { Link, useNavigate } from "react-router-dom"
 
-const { Title, Text, Link } = Typography;
+const { Title, Text } = Typography
 
 export default function Signin() {
   const Navigate = useNavigate();
@@ -32,38 +21,39 @@ export default function Signin() {
 
   const onFinish = async (values) => {
     try {
-      setLoading(true);
+      setLoading(true)
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
           const user = userCredential.user;
-          message.success("Logged Inn successfully...");
+          message.success("Logged Inn successfully...")
 
           Navigate("/");
-          setLoading(false);
+          setLoading(false)
         })
         .catch((error) => {
-          setLoading(false);
+          setLoading(false)
           const errorCode = error.code;
           const errorMessage = error.message;
-          message.error(errorMessage);
+          message.error(errorMessage)
         });
+
     } catch (error) {
-      message.error("Login failed!");
+      message.error("Login failed!")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Spin size="large" />
       </div>
-    );
-  } else
-    return (
-      <>
-        <style>{`
+    )
+  }
+  else return (
+    <>
+      <style >{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-20px) rotate(180deg); }
@@ -289,135 +279,104 @@ export default function Signin() {
         }
       `}</style>
 
-        <div className="login-container">
-          {/* Background decorations */}
-          <div className="background-orb orb-1"></div>
-          <div className="background-orb orb-2"></div>
-          <div className="background-orb orb-3"></div>
+      <div className="login-container">
+        {/* Background decorations */}
+        <div className="background-orb orb-1"></div>
+        <div className="background-orb orb-2"></div>
+        <div className="background-orb orb-3"></div>
 
-          <Card className="login-card">
-            <div style={{ padding: "24px 0" }}>
-              {/* Logo and Header */}
-              <div className="logo-container">
-                <LockOutlined style={{ color: "white", fontSize: "24px" }} />
-              </div>
-
-              <Title level={2} className="title">
-                Welcome Back
-              </Title>
-
-              <Text className="subtitle">
-                Sign in to your account to continue
-              </Text>
-
-              {/* Login Form */}
-              <Form
-                form={form}
-                name="login"
-                onFinish={onFinish}
-                layout="vertical"
-                size="large"
-              >
-                <Form.Item
-                  name="email"
-                  label="Email"
-                  className="form-item-email"
-                  rules={[
-                    { required: true, message: "Please input your email!" },
-                    { type: "email", message: "Please enter a valid email!" },
-                  ]}
-                >
-                  <Input
-                    prefix={<MailOutlined style={{ color: "#9ca3af" }} />}
-                    placeholder="Enter your email"
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="password"
-                  label="Password"
-                  className="form-item-password"
-                  rules={[
-                    { required: true, message: "Please input your password!" },
-                    {
-                      min: 6,
-                      message: "Password must be at least 6 characters!",
-                    },
-                  ]}
-                >
-                  <Input.Password
-                    prefix={<LockOutlined style={{ color: "#9ca3af" }} />}
-                    placeholder="Enter your password"
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
-                  />
-                </Form.Item>
-
-                <Form.Item className="form-item-options">
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
-                      <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
-                    <Link href="#" style={{ color: "#7c3aed" }}>
-                      Forgot password?
-                    </Link>
-                  </div>
-                </Form.Item>
-
-                <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="login-button"
-                    loading={loading}
-                    block
-                    icon={
-                      loading ? (
-                        <LoadingOutlined className="loading-icon" />
-                      ) : (
-                        <ArrowRightOutlined />
-                      )
-                    }
-                  >
-                    {loading ? "Signing in..." : "Sign In"}
-                  </Button>
-                </Form.Item>
-              </Form>
-
-              {/* Divider */}
-              <div className="divider-container">
-                <Divider>
-                  <Text
-                    type="secondary"
-                    style={{ fontSize: "12px", textTransform: "uppercase" }}
-                  >
-                    Or continue with
-                  </Text>
-                </Divider>
-              </div>
-
-              {/* Sign Up Link */}
-              <div className="signup-link" style={{ marginTop: "24px" }}>
-                <Text type="secondary">
-                  Don't have an account?{" "}
-                  <Link
-                    to="/signup"
-                    style={{ color: "#7c3aed", fontWeight: 600 }}
-                  >
-                    Sign up
-                  </Link>
-                </Text>
-              </div>
+        <Card className="login-card">
+          <div style={{ padding: "24px 0" }}>
+            {/* Logo and Header */}
+            <div className="logo-container">
+              <LockOutlined style={{ color: "white", fontSize: "24px" }} />
             </div>
-          </Card>
-        </div>
-      </>
-    );
+
+            <Title level={2} className="title">
+              Welcome Back
+            </Title>
+
+            <Text className="subtitle">Sign in to your account to continue</Text>
+
+            {/* Login Form */}
+            <Form form={form} name="login" onFinish={onFinish} layout="vertical" size="large">
+              <Form.Item
+                name="email"
+                label="Email"
+                className="form-item-email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                  { type: "email", message: "Please enter a valid email!" },
+                ]}
+              >
+                <Input prefix={<MailOutlined style={{ color: "#9ca3af" }} />} placeholder="Enter your email" />
+              </Form.Item>
+
+              <Form.Item
+                name="password"
+                label="Password"
+                className="form-item-password"
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                  { min: 6, message: "Password must be at least 6 characters!" },
+                ]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined style={{ color: "#9ca3af" }} />}
+                  placeholder="Enter your password"
+                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                />
+              </Form.Item>
+
+              <Form.Item className="form-item-options">
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <Form.Item name="remember" valuePropName="checked" noStyle>
+                    <Checkbox>Remember me</Checkbox>
+                  </Form.Item>
+                  <Link href="#" style={{ color: "#7c3aed" }}>
+                    Forgot password?
+                  </Link>
+                </div>
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-button"
+                  loading={loading}
+                  block
+                  icon={loading ? <LoadingOutlined className="loading-icon" /> : <ArrowRightOutlined />}
+                >
+                  {loading ? "Signing in..." : "Sign In"}
+                </Button>
+              </Form.Item>
+            </Form>
+
+            {/* Divider */}
+            <div className="divider-container">
+              <Divider>
+                <Text type="secondary" style={{ fontSize: "12px", textTransform: "uppercase" }}>
+                  Or continue with
+                </Text>
+              </Divider>
+            </div>
+
+
+            {/* Sign Up Link */}
+            <div className="signup-link" style={{ marginTop: "24px" }}>
+              <Text type="secondary">
+                Don't have an account?{" "}
+                <Link to="/signup" style={{ color: "#7c3aed", fontWeight: 600 }}>
+                  Sign up
+                </Link>
+              </Text>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+    </>
+
+  )
 }
