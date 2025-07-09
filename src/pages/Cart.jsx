@@ -1,10 +1,21 @@
-"use client"
-
-import { useContext } from "react"
-import { CartContext } from "../context/CartContext"
-import { AuthContext } from "../context/AuthContext"
-import { Link } from "react-router-dom"
-import { Button, Image, Card, Row, Col, Typography, Space, Divider, Statistic, Empty, Tag, Tooltip } from "antd"
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
+import {
+  Button,
+  Image,
+  Card,
+  Row,
+  Col,
+  Typography,
+  Space,
+  Divider,
+  Statistic,
+  Empty,
+  Tag,
+  Tooltip,
+} from "antd";
 import {
   MinusOutlined,
   PlusOutlined,
@@ -12,16 +23,23 @@ import {
   ShoppingCartOutlined,
   LoginOutlined,
   CreditCardOutlined,
-} from "@ant-design/icons"
+} from "@ant-design/icons";
 
-const { Title, Text, Paragraph } = Typography
+const { Title, Text, Paragraph } = Typography;
 
 const Cart = () => {
-  const { cartItems, removeItemFromCart, addItemToCart, lessQuanityFromCart } = useContext(CartContext)
-  const { user } = useContext(AuthContext)
+  const { cartItems, removeItemFromCart, addItemToCart, lessQuanityFromCart } =
+    useContext(CartContext);
+  const { user } = useContext(AuthContext);
 
-  const totalAmount = cartItems.reduce((total, obj) => total + obj.quantity * obj.price, 0)
-  const totalQuantity = cartItems.reduce((total, obj) => total + obj.quantity, 0)
+  const totalAmount = cartItems.reduce(
+    (total, obj) => total + obj.quantity * obj.price,
+    0
+  );
+  const totalQuantity = cartItems.reduce(
+    (total, obj) => total + obj.quantity,
+    0
+  );
 
   if (cartItems.length === 0) {
     return (
@@ -37,15 +55,19 @@ const Cart = () => {
               </span>
             }
           >
-            <Link to="/products">
-              <Button type="primary" size="large" icon={<ShoppingCartOutlined />}>
+            <Link to="/shop">
+              <Button
+                type="primary"
+                size="large"
+                icon={<ShoppingCartOutlined />}
+              >
                 Start Shopping
               </Button>
             </Link>
           </Empty>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
@@ -62,7 +84,11 @@ const Cart = () => {
       <Row gutter={[16, 16]} className="mb-6">
         <Col xs={24} sm={8}>
           <Card className="text-center h-full">
-            <Statistic title="Total Items" value={totalQuantity} valueStyle={{ color: "#1890ff", fontSize: "2rem" }} />
+            <Statistic
+              title="Total Items"
+              value={totalQuantity}
+              valueStyle={{ color: "#1890ff", fontSize: "2rem" }}
+            />
           </Card>
         </Col>
         <Col xs={24} sm={8}>
@@ -79,13 +105,23 @@ const Cart = () => {
           <Card className="text-center h-full flex items-center justify-center">
             {user.isLogin ? (
               <Link to="/checkout" className="w-full">
-                <Button type="primary" size="large" icon={<CreditCardOutlined />} className="w-full h-12">
+                <Button
+                  type="primary"
+                  size="large"
+                  icon={<CreditCardOutlined />}
+                  className="w-full h-12"
+                >
                   Proceed to Checkout
                 </Button>
               </Link>
             ) : (
               <Link to="/signin" className="w-full">
-                <Button type="default" size="large" icon={<LoginOutlined />} className="w-full h-12">
+                <Button
+                  type="default"
+                  size="large"
+                  icon={<LoginOutlined />}
+                  className="w-full h-12"
+                >
                   Login to Checkout
                 </Button>
               </Link>
@@ -101,11 +137,17 @@ const Cart = () => {
         <Title level={3}>Cart Items ({cartItems.length})</Title>
 
         {cartItems.map((data) => {
-          const description = data.desc || ""
-          const truncatedDesc = description.length > 100 ? `${description.slice(0, 100)}...` : description
+          const description = data.desc || "";
+          const truncatedDesc =
+            description.length > 100
+              ? `${description.slice(0, 100)}...`
+              : description;
 
           return (
-            <Card key={data.id} className="shadow-sm hover:shadow-md transition-shadow">
+            <Card
+              key={data.id}
+              className="shadow-sm hover:shadow-md transition-shadow"
+            >
               <Row gutter={[16, 16]} align="middle">
                 {/* Product Image */}
                 <Col xs={24} sm={8} md={6}>
@@ -133,7 +175,11 @@ const Cart = () => {
                         <Paragraph
                           type="secondary"
                           className="mb-3"
-                          ellipsis={{ rows: 2, expandable: true, symbol: "more" }}
+                          ellipsis={{
+                            rows: 2,
+                            expandable: true,
+                            symbol: "more",
+                          }}
                         >
                           {description}
                         </Paragraph>
@@ -168,7 +214,10 @@ const Cart = () => {
                               </Text>
                             </Button>
                             <Tooltip title="Increase quantity">
-                              <Button icon={<PlusOutlined />} onClick={() => addItemToCart(data)} />
+                              <Button
+                                icon={<PlusOutlined />}
+                                onClick={() => addItemToCart(data)}
+                              />
                             </Tooltip>
                           </Button.Group>
                         </Space>
@@ -189,7 +238,7 @@ const Cart = () => {
                 </Col>
               </Row>
             </Card>
-          )
+          );
         })}
       </div>
 
@@ -202,7 +251,8 @@ const Cart = () => {
                 Order Summary
               </Text>
               <Text type="secondary">
-                {totalQuantity} item{totalQuantity !== 1 ? "s" : ""} in your cart
+                {totalQuantity} item{totalQuantity !== 1 ? "s" : ""} in your
+                cart
               </Text>
             </Space>
           </Col>
@@ -213,7 +263,11 @@ const Cart = () => {
               </Text>
               {user.isLogin ? (
                 <Link to="/checkout">
-                  <Button type="primary" size="large" icon={<CreditCardOutlined />}>
+                  <Button
+                    type="primary"
+                    size="large"
+                    icon={<CreditCardOutlined />}
+                  >
                     Checkout Now
                   </Button>
                 </Link>
@@ -229,7 +283,7 @@ const Cart = () => {
         </Row>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

@@ -28,7 +28,7 @@ const About = () => {
           </div>
           <div className="lg:w-1/2">
             <img
-              src="https://via.placeholder.com/600x400" // Replace with your furniture store image
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa2n90sG3uFr6PSNqKOwF14Ye9GEXK1ceg_g&s" // Replace with your furniture store image
               alt="Furniture showcase"
               className="rounded-lg shadow-lg w-full"
             />

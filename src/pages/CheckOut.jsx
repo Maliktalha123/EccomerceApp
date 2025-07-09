@@ -29,7 +29,7 @@ import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../utils/firebase";
-import { useNavigate } from "react-router-dom"; // ✅ ✅ import navigate
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -41,7 +41,7 @@ export default function CheckOut() {
 
   const { cartItems, clearCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate(); // ✅ ✅ create navigate
+  const navigate = useNavigate();
 
   const calculateSubtotal = () => {
     return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -132,7 +132,7 @@ export default function CheckOut() {
                 onClick={() => {
                   navigate("/");
                   setCurrentStep(0);
-                }} // ✅ ✅ navigate to home
+                }}
               >
                 Continue Shopping
               </Button>
@@ -142,7 +142,9 @@ export default function CheckOut() {
       </div>
     );
   }
-
+if(!cartItems) return <div>
+  Please add Something in cart
+</div>
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
