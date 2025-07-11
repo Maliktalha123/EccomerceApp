@@ -14,7 +14,11 @@ const ProductByCategory = () => {
 console.log("Param => ", id)
   // Filter products by category
   const filteredProducts = products.filter(
-    (p) => p.categoryId === id
+    (p) => {
+      console.log("P",p.category)
+
+    return  p.category === id
+    }
   );
 
   return (
