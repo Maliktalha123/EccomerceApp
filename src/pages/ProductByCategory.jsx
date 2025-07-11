@@ -11,19 +11,15 @@ const ProductByCategory = () => {
   const { products } = useContext(ProductContext);
   const { addItemToCart } = useContext(CartContext);
   const { addItemToFavorite } = useContext(FavoriteContext);
-console.log("Param => ", id)
+  console.log("Param => ", id);
   // Filter products by category
-  const filteredProducts = products.filter(
-    (p) => {
-      console.log("P",p.category)
-
-    return  p.category === id
-    }
-  );
+  const filteredProducts = products.filter((p) => p.category === id);
 
   return (
     <div style={{ padding: "24px" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Products in this Category</h2>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Products in this Category
+      </h2>
       <Row gutter={[24, 24]}>
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
