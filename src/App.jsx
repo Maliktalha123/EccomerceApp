@@ -40,12 +40,12 @@ function App() {
     } else if (user?.isLogin) {
       return <Navigate to="/home" />;
     } else {
-      return <Signin />;
+      return <Navigate to="/home" />;
     }
   };
 
   const ProtectedRoute = ({ children, condition }) => {
-    return condition ? children : <Navigate to="/" />;
+    return condition ? children : <Navigate to="/signin" />;
   };
 
   const AdminLayout = () => {
@@ -90,10 +90,38 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/categories" element={<Categories />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/favorite" element={<Favorite />} />
-        <Route path="/checkout" element={<CheckOut />} />
-        <Route path="/my-orders" element={<MyOrders />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute condition={user?.isLogin}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/favorite"
+          element={
+            <ProtectedRoute condition={user?.isLogin}>
+              <Favorite />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute condition={user?.isLogin}>
+              <CheckOut />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-orders"
+          element={
+            <ProtectedRoute condition={user?.isLogin}>
+              <MyOrders />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

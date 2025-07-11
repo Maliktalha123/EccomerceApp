@@ -5,6 +5,8 @@ import { ProductContext } from "../context/ProductsContext";
 
 import { Link } from "react-router-dom";
 import Shop from "./ProductByCategory";
+import Header from "../components/Header";
+import CategoriesForProduct from "../components/CategoriesForProducts";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -14,6 +16,7 @@ const Home = () => {
 
   return (
     <div>
+      <CategoriesForProduct/>
       <div className="text-center">
         <h1 className="text-3xl">Our Products</h1>
         <br />

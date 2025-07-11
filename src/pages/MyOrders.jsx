@@ -84,6 +84,7 @@ export default function MyOrders() {
   const getOrderProgress = (status) => {
     const statusSteps = {
       pending: 0,
+      
       shipped: 1,
       delivered: 2,
       cancelled: 0,

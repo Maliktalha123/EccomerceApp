@@ -1,28 +1,51 @@
-// src/components/Categories.jsx
+import { useParams } from "react-router-dom";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { CategoryContext } from "../context/CategoriesContext";
+import { Row, Col } from "antd";
+import { ProductContext } from "../context/ProductsContext";
+import ProductCard from "../components/ProductCard";
+import { CartContext } from "../context/CartContext";
+import { FavoriteContext } from "../context/FavoriteContext";
 
-function Categories() {
-  const { categories } = useContext(CategoryContext);
-  const navigate = useNavigate();
+const ProductByCategory = () => {
+  const { id } = useParams(); // Category ID
+  const { products } = useContext(ProductContext);
+  const { addItemToCart } = useContext(CartContext);
+  const { addItemToFavorite } = useContext(FavoriteContext);
+
+  // Filter products by category
+  const filteredProducts = products.filter(
+    (p) => p.categoryId === id
+  );
 
   return (
-    <div className="p-5">
-      <h2 className="text-xl font-bold mb-4">All Categories</h2>
-      <div className="flex flex-wrap gap-3">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => navigate(`/category/${cat.id}`)}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-          >
-            {cat.title}
-          </button>
-        ))}
-      </div>
+    <div style={{ padding: "24px" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Products in this Category</h2>
+      <Row gutter={[24, 24]}>
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <Col
+              key={product.id}
+              xs={24}
+              sm={12}
+              md={8}
+              lg={6}
+              xl={6}
+              style={{ display: "flex" }}
+            >
+              <ProductCard
+                product={product}
+                onAddToCart={addItemToCart}
+                onWishlist={addItemToFavorite}
+                onQuickView={() => console.log(product)}
+              />
+            </Col>
+          ))
+        ) : (
+          <p>No products found in this category.</p>
+        )}
+      </Row>
     </div>
   );
-}
+};
 
-export default Categories;
+export default ProductByCategory;
