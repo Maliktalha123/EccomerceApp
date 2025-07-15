@@ -5,6 +5,7 @@ import { ProductContext } from "../context/ProductsContext";
 import ProductCard from "../components/ProductCard";
 import { CartContext } from "../context/CartContext";
 import { FavoriteContext } from "../context/FavoriteContext";
+import CategoriesForProduct from "../components/CategoriesForProducts";
 
 const ProductByCategory = () => {
   const { id } = useParams(); // Category ID
@@ -12,13 +13,14 @@ const ProductByCategory = () => {
   const { addItemToCart } = useContext(CartContext);
   const { addItemToFavorite } = useContext(FavoriteContext);
 
-  // Filter products by category
+  
   const filteredProducts = products.filter(
     (p) => p.categoryId === id
   );
 
   return (
     <div style={{ padding: "24px" }}>
+      <CategoriesForProduct />
       <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Products in this Category</h2>
       <Row gutter={[24, 24]}>
         {filteredProducts.length > 0 ? (
@@ -30,7 +32,7 @@ const ProductByCategory = () => {
               md={8}
               lg={6}
               xl={6}
-              style={{ display: "flex" }}
+              style={{ display: "flex", justifyContent:"center" }}
             >
               <ProductCard
                 product={product}

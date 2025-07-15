@@ -1,9 +1,7 @@
-"use client"
-
-import { useEffect, useState, useContext } from "react"
-import { AuthContext } from "../context/AuthContext"
-import { db } from "../utils/firebase"
-import { collection, query, where, getDocs } from "firebase/firestore"
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { db } from "../utils/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import {
   Card,
   List,
@@ -19,7 +17,7 @@ import {
   Space,
   Statistic,
   Empty,
-} from "antd"
+} from "antd";
 import {
   ShoppingCartOutlined,
   CalendarOutlined,
@@ -28,37 +26,42 @@ import {
   ClockCircleOutlined,
   ReloadOutlined,
   EyeOutlined,
-} from "@ant-design/icons"
+} from "@ant-design/icons";
 
-const { Title, Text, Paragraph } = Typography
-const { Step } = Steps
+const { Title, Text, Paragraph } = Typography;
+const { Step } = Steps;
 
 export default function MyOrders() {
-  const { user } = useContext(AuthContext)
-  const [orders, setOrders] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { user } = useContext(AuthContext);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // User orders fetch karne wala function
   const getUserOrders = async (userEmail) => {
-    const q = query(collection(db, "orders"), where("userEmail", "==", userEmail))
-    const querySnapshot = await getDocs(q)
-    const fetchedOrders = []
+    const q = query(
+      collection(db, "orders"),
+      where("userEmail", "==", userEmail)
+    );
+    const querySnapshot = await getDocs(q);
+    const fetchedOrders = [];
     querySnapshot.forEach((doc) => {
-      fetchedOrders.push({ id: doc.id, ...doc.data() })
-    })
-    return fetchedOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  }
+      fetchedOrders.push({ id: doc.id, ...doc.data() });
+    });
+    return fetchedOrders.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+  };
 
   useEffect(() => {
     if (user?.email) {
       getUserOrders(user.email).then((data) => {
-        setOrders(data)
-        setLoading(false)
-      })
+        setOrders(data);
+        setLoading(false);
+      });
     } else {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [user])
+  }, [user]);
 
   const getStatusColor = (status) => {
     const statusColors = {
@@ -67,9 +70,9 @@ export default function MyOrders() {
       shipped: "cyan",
       delivered: "green",
       cancelled: "red",
-    }
-    return statusColors[status?.toLowerCase()] || "default"
-  }
+    };
+    return statusColors[status?.toLowerCase()] || "default";
+  };
 
   const getStatusIcon = (status) => {
     const statusIcons = {
@@ -77,27 +80,31 @@ export default function MyOrders() {
       shipped: <TruckOutlined />,
       delivered: <CheckCircleOutlined />,
       cancelled: <ClockCircleOutlined />,
-    }
-    return statusIcons[status?.toLowerCase()] || <ClockCircleOutlined />
-  }
+    };
+    return statusIcons[status?.toLowerCase()] || <ClockCircleOutlined />;
+  };
 
   const getOrderProgress = (status) => {
     const statusSteps = {
       pending: 0,
-      
       shipped: 1,
       delivered: 2,
       cancelled: 0,
-    }
-    return statusSteps[status?.toLowerCase()] || 0
-  }
+    };
+    return statusSteps[status?.toLowerCase()] || 0;
+  };
 
   const calculateOrderStats = () => {
-    const totalOrders = orders.length
-    const totalSpent = orders.reduce((sum, order) => sum + order.totalAmount, 0)
-    const pendingOrders = orders.filter((order) => order.status?.toLowerCase() === "pending").length
-    return { totalOrders, totalSpent, pendingOrders }
-  }
+    const totalOrders = orders.length;
+    const totalSpent = orders.reduce(
+      (sum, order) => sum + order.totalAmount,
+      0
+    );
+    const pendingOrders = orders.filter(
+      (order) => order.status?.toLowerCase() === "pending"
+    ).length;
+    return { totalOrders, totalSpent, pendingOrders };
+  };
 
   if (loading) {
     return (
@@ -114,7 +121,7 @@ export default function MyOrders() {
         <Spin size="large" />
         <Text type="secondary">Loading your orders...</Text>
       </div>
-    )
+    );
   }
 
   if (!user?.email) {
@@ -125,7 +132,9 @@ export default function MyOrders() {
           description={
             <div>
               <Title level={3}>Please log in to view your orders</Title>
-              <Paragraph type="secondary">You need to be logged in to access your order history</Paragraph>
+              <Paragraph type="secondary">
+                You need to be logged in to access your order history
+              </Paragraph>
             </div>
           }
         >
@@ -134,7 +143,7 @@ export default function MyOrders() {
           </Button>
         </Empty>
       </div>
-    )
+    );
   }
 
   if (orders.length === 0) {
@@ -146,7 +155,8 @@ export default function MyOrders() {
             <div>
               <Title level={3}>No orders found</Title>
               <Paragraph type="secondary">
-                You haven't placed any orders yet. Start shopping to see your orders here!
+                You haven't placed any orders yet. Start shopping to see your
+                orders here!
               </Paragraph>
             </div>
           }
@@ -156,10 +166,10 @@ export default function MyOrders() {
           </Button>
         </Empty>
       </div>
-    )
+    );
   }
 
-  const stats = calculateOrderStats()
+  const stats = calculateOrderStats();
 
   return (
     <div
@@ -175,13 +185,13 @@ export default function MyOrders() {
             padding: 24px !important;
           }
         }
-        
+
         .mobile-stack {
           flex-direction: column;
           align-items: flex-start !important;
           gap: 8px;
         }
-        
+
         @media (min-width: 576px) {
           .mobile-stack {
             flex-direction: row;
@@ -189,23 +199,23 @@ export default function MyOrders() {
             justify-content: flex-end;
           }
         }
-        
+
         .mobile-button {
           font-size: 12px;
           padding: 4px 8px;
           height: auto;
         }
-        
+
         @media (max-width: 400px) {
           .mobile-button .button-text {
             display: none;
           }
         }
-        
+
         .order-header {
           margin-bottom: 16px;
         }
-        
+
         @media (min-width: 576px) {
           .order-header {
             margin-bottom: 20px;
@@ -217,7 +227,13 @@ export default function MyOrders() {
       <div style={{ marginBottom: "24px" }}>
         <Title
           level={2}
-          style={{ marginBottom: "8px", display: "flex", alignItems: "center", gap: "12px", fontSize: "20px" }}
+          style={{
+            marginBottom: "8px",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            fontSize: "20px",
+          }}
         >
           <ShoppingCartOutlined style={{ color: "#1890ff" }} />
           My Orders
@@ -279,11 +295,20 @@ export default function MyOrders() {
             {/* Order Header - Fully Responsive */}
             <div className="order-header">
               <div style={{ marginBottom: "12px" }}>
-                <Text strong style={{ fontSize: "15px", display: "block", marginBottom: "4px" }}>
+                <Text
+                  strong
+                  style={{
+                    fontSize: "15px",
+                    display: "block",
+                    marginBottom: "4px",
+                  }}
+                >
                   Order #{order.id.slice(-8).toUpperCase()}
                 </Text>
                 <Space size={6}>
-                  <CalendarOutlined style={{ color: "#8c8c8c", fontSize: "12px" }} />
+                  <CalendarOutlined
+                    style={{ color: "#8c8c8c", fontSize: "12px" }}
+                  />
                   <Text type="secondary" style={{ fontSize: "12px" }}>
                     {new Date(order.createdAt).toLocaleDateString("en-IN", {
                       year: "numeric",
@@ -294,7 +319,10 @@ export default function MyOrders() {
                 </Space>
               </div>
 
-              <div className="mobile-stack" style={{ display: "flex", gap: "8px" }}>
+              <div
+                className="mobile-stack"
+                style={{ display: "flex", gap: "8px" }}
+              >
                 <Tag
                   color={getStatusColor(order.status)}
                   icon={getStatusIcon(order.status)}
@@ -306,7 +334,11 @@ export default function MyOrders() {
                 >
                   {order.status?.toUpperCase() || "PENDING"}
                 </Tag>
-                <Button type="text" icon={<EyeOutlined />} className="mobile-button">
+                <Button
+                  type="text"
+                  icon={<EyeOutlined />}
+                  className="mobile-button"
+                >
                   <span className="button-text">Details</span>
                 </Button>
               </div>
@@ -320,7 +352,7 @@ export default function MyOrders() {
                 responsive={false}
                 items={[
                   { title: "Placed", icon: <CheckCircleOutlined /> },
-                  
+
                   { title: "Shipped", icon: <TruckOutlined /> },
                   { title: "Delivered", icon: <CheckCircleOutlined /> },
                 ]}
@@ -336,9 +368,19 @@ export default function MyOrders() {
               renderItem={(item) => (
                 <List.Item style={{ padding: "8px 0", border: "none" }}>
                   <List.Item.Meta
-                    avatar={<Avatar src={item.url} size={48} shape="square" style={{ borderRadius: "6px" }} />}
+                    avatar={
+                      <Avatar
+                        src={item.url}
+                        size={48}
+                        shape="square"
+                        style={{ borderRadius: "6px" }}
+                      />
+                    }
                     title={
-                      <Text strong style={{ fontSize: "14px", lineHeight: "1.4" }}>
+                      <Text
+                        strong
+                        style={{ fontSize: "14px", lineHeight: "1.4" }}
+                      >
                         {item.name}
                       </Text>
                     }
@@ -369,7 +411,11 @@ export default function MyOrders() {
                     </Text>
                     <Divider type="vertical" />
                     <Text type="secondary" style={{ fontSize: "12px" }}>
-                      Qty: {order.items?.reduce((sum, item) => sum + item.quantity, 0) || 0}
+                      Qty:{" "}
+                      {order.items?.reduce(
+                        (sum, item) => sum + item.quantity,
+                        0
+                      ) || 0}
                     </Text>
                   </Space>
                 </Col>
@@ -377,7 +423,10 @@ export default function MyOrders() {
                   <div style={{ textAlign: "right" }}>
                     <Space align="center" size={8}>
                       <Text style={{ fontSize: "14px" }}>Total:</Text>
-                      <Text strong style={{ fontSize: "18px", color: "#52c41a" }}>
+                      <Text
+                        strong
+                        style={{ fontSize: "18px", color: "#52c41a" }}
+                      >
                         ₹{order.totalAmount?.toLocaleString() || "0"}
                       </Text>
                     </Space>
@@ -389,5 +438,5 @@ export default function MyOrders() {
         )}
       />
     </div>
-  )
+  );
 }

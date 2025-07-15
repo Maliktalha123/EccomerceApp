@@ -4,9 +4,10 @@ import { AuthContext } from "../context/AuthContext";
 import { ProductContext } from "../context/ProductsContext";
 
 import { Link } from "react-router-dom";
-import Shop from "./ProductByCategory";
+
 import Header from "../components/Header";
 import CategoriesForProduct from "../components/CategoriesForProducts";
+import Shop from "./Shop";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -15,9 +16,9 @@ const Home = () => {
   console.log("Products => ", products);
 
   return (
-    <div>
+    <div className="items-center ">
       <CategoriesForProduct/>
-      <div className="text-center">
+      <div className="text-center mi-auto">
         <h1 className="text-3xl">Our Products</h1>
         <br />
         <Shop />
